@@ -1,18 +1,18 @@
 import { useState, useMemo } from 'react'
-import { SortBars } from '../../components/SortBars'
-import { Controls } from '../../components/Controls'
-import { useAlgoPlayer } from '../../hooks/useAlgoPlayer'
+import { SortBars } from '../../components/sort-bars.component'
+import { Controls } from '../../components/controls.component'
+import { useAlgoPlayer } from '../../hooks/use-algo-player.hook'
 import { generateRandomArray, collectSteps } from '../../utils/array.utils'
-import { bubbleSortSteps } from './bubble-sort.logic'
+import { insertionSortSteps } from './insertion-sort.logic'
 
 const LEGEND = [
   { color: 'bg-amber-400', label: 'comparing' },
   { color: 'bg-emerald-500', label: 'sorted' },
 ]
 
-export function BubbleSort() {
+export function InsertionSort() {
   const [input, setInput] = useState(() => generateRandomArray(16))
-  const steps = useMemo(() => collectSteps(bubbleSortSteps(input)), [input])
+  const steps = useMemo(() => collectSteps(insertionSortSteps(input)), [input])
   const player = useAlgoPlayer(steps)
 
   const handleNewInput = () => {

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
-import { SortBars } from './SortBars'
-import { useComparePlayer } from '../hooks/useComparePlayer'
+import { SortBars } from './sort-bars.component'
+import { useComparePlayer } from '../hooks/use-compare-player.hook'
 import { generateRandomArray, collectSteps } from '../utils/array.utils'
 import { bubbleSortSteps } from '../algorithms/bubble-sort/bubble-sort.logic'
 import { mergeSortSteps } from '../algorithms/merge-sort/merge-sort.logic'

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react'
-import { SearchBlocks } from '../../components/SearchBlocks'
-import { Controls } from '../../components/Controls'
-import { useAlgoPlayer } from '../../hooks/useAlgoPlayer'
+import { SearchBlocks } from '../../components/search-blocks.component'
+import { Controls } from '../../components/controls.component'
+import { useAlgoPlayer } from '../../hooks/use-algo-player.hook'
 import { generateSortedArray, collectSteps } from '../../utils/array.utils'
 import { binarySearchSteps } from './binary-search.logic'
 
