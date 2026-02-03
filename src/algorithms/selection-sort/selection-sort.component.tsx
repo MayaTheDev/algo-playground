@@ -1,19 +1,18 @@
 import { useState, useMemo } from 'react'
-import { SortBars } from '../../components/SortBars'
-import { Controls } from '../../components/Controls'
-import { useAlgoPlayer } from '../../hooks/useAlgoPlayer'
+import { SortBars } from '../../components/sort-bars.component'
+import { Controls } from '../../components/controls.component'
+import { useAlgoPlayer } from '../../hooks/use-algo-player.hook'
 import { generateRandomArray, collectSteps } from '../../utils/array.utils'
-import { mergeSortSteps } from './merge-sort.logic'
+import { selectionSortSteps } from './selection-sort.logic'
 
 const LEGEND = [
   { color: 'bg-amber-400', label: 'comparing' },
-  { color: 'bg-cyan-500/60', label: 'merging' },
   { color: 'bg-emerald-500', label: 'sorted' },
 ]
 
-export function MergeSort() {
+export function SelectionSort() {
   const [input, setInput] = useState(() => generateRandomArray(16))
-  const steps = useMemo(() => collectSteps(mergeSortSteps(input)), [input])
+  const steps = useMemo(() => collectSteps(selectionSortSteps(input)), [input])
   const player = useAlgoPlayer(steps)
 
   const handleNewInput = () => {
