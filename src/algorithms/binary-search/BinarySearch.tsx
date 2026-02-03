@@ -5,11 +5,15 @@ import { useAlgoPlayer } from '../../hooks/useAlgoPlayer'
 import { generateSortedArray, collectSteps } from '../../utils/array.utils'
 import { binarySearchSteps } from './binary-search.logic'
 
+const LEGEND = [
+  { color: 'bg-cyan-500', label: 'midpoint' },
+  { color: 'bg-slate-600', label: 'active range' },
+  { color: 'bg-slate-800', label: 'eliminated' },
+  { color: 'bg-emerald-500', label: 'found' },
+]
+
 function pickTarget(arr: number[]): number {
-  // 70% chance of picking a value that exists
-  if (Math.random() < 0.7) {
-    return arr[Math.floor(Math.random() * arr.length)]
-  }
+  if (Math.random() < 0.7) return arr[Math.floor(Math.random() * arr.length)]
   return Math.floor(Math.random() * 90) + 10
 }
 
@@ -35,16 +39,19 @@ export function BinarySearch() {
     <div className="flex flex-col h-full">
       <div className="flex-1 flex items-center justify-center p-4">
         <div className="w-full max-w-2xl">
-          <SearchBlocks step={player.currentStep} />
-          <div className="mt-4 flex gap-3 justify-center text-[10px] text-slate-600">
-            <span><span className="inline-block w-2 h-2 bg-cyan-500 mr-1" />midpoint</span>
-            <span><span className="inline-block w-2 h-2 bg-slate-600 mr-1" />active range</span>
-            <span><span className="inline-block w-2 h-2 bg-slate-800 mr-1" />eliminated</span>
-            <span><span className="inline-block w-2 h-2 bg-emerald-500 mr-1" />found</span>
+          <div className="mb-4 text-center">
+            <span className="text-xs text-slate-500 font-mono">searching for </span>
+            <span className="text-lg font-mono text-emerald-400">{state.target}</span>
           </div>
+          <SearchBlocks step={player.currentStep} />
         </div>
       </div>
-      <Controls player={player} onNewInput={handleNewInput} />
+      <Controls
+        player={player}
+        stepDescription={player.currentStep.description}
+        legend={LEGEND}
+        onNewInput={handleNewInput}
+      />
     </div>
   )
 }

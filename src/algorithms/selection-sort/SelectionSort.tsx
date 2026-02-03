@@ -5,6 +5,11 @@ import { useAlgoPlayer } from '../../hooks/useAlgoPlayer'
 import { generateRandomArray, collectSteps } from '../../utils/array.utils'
 import { selectionSortSteps } from './selection-sort.logic'
 
+const LEGEND = [
+  { color: 'bg-amber-400', label: 'comparing' },
+  { color: 'bg-emerald-500', label: 'sorted' },
+]
+
 export function SelectionSort() {
   const [input, setInput] = useState(() => generateRandomArray(16))
   const steps = useMemo(() => collectSteps(selectionSortSteps(input)), [input])
@@ -22,7 +27,12 @@ export function SelectionSort() {
           <SortBars step={player.currentStep} />
         </div>
       </div>
-      <Controls player={player} onNewInput={handleNewInput} />
+      <Controls
+        player={player}
+        stepDescription={player.currentStep.description}
+        legend={LEGEND}
+        onNewInput={handleNewInput}
+      />
     </div>
   )
 }
