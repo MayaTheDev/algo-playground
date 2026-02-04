@@ -38,15 +38,10 @@ export function SearchBlocks({ step }: Props) {
         })}
       </div>
 
-      <div className="mt-4 text-xs text-slate-400 font-mono flex gap-4 justify-center">
-        <span>target: <span className="text-emerald-400">{step.target}</span></span>
+      <div className="mt-4 text-xs text-slate-500 font-mono flex gap-4 justify-center">
         {left !== -1 && <span>left: <span className="text-amber-400">{left}</span></span>}
         {right !== -1 && <span>right: <span className="text-amber-400">{right}</span></span>}
         {mid !== -1 && found === null && <span>mid: <span className="text-cyan-400">{mid}</span></span>}
-        {found !== null && found >= 0 && (
-          <span className="text-emerald-400">found at index {found}</span>
-        )}
-        {found === -1 && <span className="text-red-400">not found</span>}
       </div>
     </div>
   )
