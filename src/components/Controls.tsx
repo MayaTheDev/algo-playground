@@ -11,8 +11,12 @@ type PlayerState = {
   setSpeed: (speed: number) => void
 }
 
+export type LegendItem = { color: string; label: string }
+
 type Props = {
   player: PlayerState
+  stepDescription?: string
+  legend?: LegendItem[]
   onNewInput?: () => void
 }
 
@@ -23,11 +27,20 @@ const SPEED_OPTIONS = [
   { label: '4×', value: 80 },
 ]
 
-export function Controls({ player, onNewInput }: Props) {
+export function Controls({ player, stepDescription, legend, onNewInput }: Props) {
   const { idx, total, playing, speed, isDone, play, pause, stepForward, reset, setSpeed } = player
 
   return (
-    <div className="flex flex-col gap-3 px-4 py-3 border-t border-slate-800">
+    <div className="flex flex-col gap-2 px-4 py-3 border-t border-slate-800">
+      {/* Step description */}
+      <div className="min-h-[18px]">
+        {stepDescription ? (
+          <p className="text-[11px] text-slate-400 font-mono">{stepDescription}</p>
+        ) : (
+          <p className="text-[11px] text-slate-600 font-mono">press play to start</p>
+        )}
+      </div>
+
       {/* Progress bar */}
       <div className="w-full h-[2px] bg-slate-800 rounded-full overflow-hidden">
         <div
@@ -71,8 +84,19 @@ export function Controls({ player, onNewInput }: Props) {
           </button>
         </div>
 
-        {/* Speed + step counter + new input */}
-        <div className="flex items-center gap-3">
+        {/* Speed + legend + step counter + new input */}
+        <div className="flex items-center gap-3 flex-wrap">
+          {legend && legend.length > 0 && (
+            <div className="flex items-center gap-2">
+              {legend.map(item => (
+                <span key={item.label} className="flex items-center gap-1 text-[10px] text-slate-500">
+                  <span className={`inline-block w-2 h-2 rounded-sm ${item.color}`} />
+                  {item.label}
+                </span>
+              ))}
+            </div>
+          )}
+
           <div className="flex items-center gap-1">
             {SPEED_OPTIONS.map(opt => (
               <button
@@ -89,9 +113,7 @@ export function Controls({ player, onNewInput }: Props) {
             ))}
           </div>
 
-          <span className="text-xs text-slate-600 font-mono">
-            {idx + 1}/{total}
-          </span>
+          <span className="text-xs text-slate-600 font-mono">{idx + 1}/{total}</span>
 
           {onNewInput && (
             <button
