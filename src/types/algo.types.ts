@@ -3,6 +3,7 @@ export type SortStep = {
   comparing: [number, number] | null
   sorted: number[]
   activeRange: [number, number] | null
+  description: string
 }
 
 export type SearchStep = {
@@ -13,6 +14,7 @@ export type SearchStep = {
   mid: number
   found: number | null
   eliminated: number[]
+  description: string
 }
 
 export type AlgoId =
