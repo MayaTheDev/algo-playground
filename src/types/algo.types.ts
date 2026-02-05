@@ -17,12 +17,11 @@ export type SearchStep = {
   description: string
 }
 
+export type SortAlgoId = 'bubble-sort' | 'merge-sort' | 'insertion-sort' | 'selection-sort'
+
 export type AlgoId =
   | 'binary-search'
-  | 'bubble-sort'
-  | 'merge-sort'
-  | 'insertion-sort'
-  | 'selection-sort'
+  | SortAlgoId
 
 export type AlgoMeta = {
   id: AlgoId
