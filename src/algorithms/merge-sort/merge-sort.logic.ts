@@ -11,6 +11,7 @@ export function* mergeSortSteps(input: number[]): Generator<SortStep> {
     comparing: null,
     sorted: Array.from({ length: n }, (_, i) => i),
     activeRange: null,
+    description: 'Sorted!',
   }
 }
 
@@ -37,6 +38,7 @@ function* merge(arr: number[], left: number, mid: number, right: number): Genera
       comparing: [left + i, mid + j],
       sorted: [],
       activeRange: [left, right],
+      description: `Merging [${left}–${right - 1}]: comparing ${leftArr[i]} and ${rightArr[j]}`,
     }
 
     if (leftArr[i] <= rightArr[j]) {
@@ -53,5 +55,11 @@ function* merge(arr: number[], left: number, mid: number, right: number): Genera
   while (j < rightArr.length) { arr[k++] = rightArr[j++] }
 
   const merged = Array.from({ length: right - left }, (_, idx) => left + idx)
-  yield { array: [...arr], comparing: null, sorted: merged, activeRange: [left, right] }
+  yield {
+    array: [...arr],
+    comparing: null,
+    sorted: merged,
+    activeRange: [left, right],
+    description: `Merged subarray [${left}–${right - 1}]`,
+  }
 }
