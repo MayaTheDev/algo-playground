@@ -7,16 +7,34 @@ export function* bubbleSortSteps(input: number[]): Generator<SortStep> {
 
   for (let i = 0; i < n - 1; i++) {
     for (let j = 0; j < n - 1 - i; j++) {
-      yield { array: [...arr], comparing: [j, j + 1], sorted: [...sorted], activeRange: null }
+      yield {
+        array: [...arr],
+        comparing: [j, j + 1],
+        sorted: [...sorted],
+        activeRange: null,
+        description: `Comparing ${arr[j]} and ${arr[j + 1]} at positions ${j} and ${j + 1}`,
+      }
 
       if (arr[j] > arr[j + 1]) {
         ;[arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
-        yield { array: [...arr], comparing: [j, j + 1], sorted: [...sorted], activeRange: null }
+        yield {
+          array: [...arr],
+          comparing: [j, j + 1],
+          sorted: [...sorted],
+          activeRange: null,
+          description: `${arr[j + 1]} > ${arr[j]} → swapping`,
+        }
       }
     }
     sorted.add(n - 1 - i)
   }
   sorted.add(0)
 
-  yield { array: [...arr], comparing: null, sorted: [...sorted], activeRange: null }
+  yield {
+    array: [...arr],
+    comparing: null,
+    sorted: [...sorted],
+    activeRange: null,
+    description: 'Sorted!',
+  }
 }
