@@ -9,7 +9,13 @@ export function* selectionSortSteps(input: number[]): Generator<SortStep> {
     let minIdx = i
 
     for (let j = i + 1; j < n; j++) {
-      yield { array: [...arr], comparing: [minIdx, j], sorted: [...sorted], activeRange: null }
+      yield {
+        array: [...arr],
+        comparing: [minIdx, j],
+        sorted: [...sorted],
+        activeRange: null,
+        description: `Scanning unsorted region — current minimum: ${arr[minIdx]} at position ${minIdx}`,
+      }
       if (arr[j] < arr[minIdx]) minIdx = j
     }
 
@@ -18,9 +24,21 @@ export function* selectionSortSteps(input: number[]): Generator<SortStep> {
     }
 
     sorted.add(i)
-    yield { array: [...arr], comparing: null, sorted: [...sorted], activeRange: null }
+    yield {
+      array: [...arr],
+      comparing: null,
+      sorted: [...sorted],
+      activeRange: null,
+      description: `Placed ${arr[i]} at position ${i}`,
+    }
   }
 
   sorted.add(n - 1)
-  yield { array: [...arr], comparing: null, sorted: [...sorted], activeRange: null }
+  yield {
+    array: [...arr],
+    comparing: null,
+    sorted: [...sorted],
+    activeRange: null,
+    description: 'Sorted!',
+  }
 }
