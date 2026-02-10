@@ -1,16 +1,28 @@
 import { useState } from 'react'
-import { AlgoSelector } from './components/AlgoSelector'
-import { CompareView } from './components/CompareView'
-import { BinarySearch } from './algorithms/binary-search/BinarySearch'
-import { BubbleSort } from './algorithms/bubble-sort/BubbleSort'
-import { MergeSort } from './algorithms/merge-sort/MergeSort'
-import { InsertionSort } from './algorithms/insertion-sort/InsertionSort'
-import { SelectionSort } from './algorithms/selection-sort/SelectionSort'
+import { AlgoSelector } from './components/algo-selector.component'
+import { CompareView } from './components/compare-view.component'
+import { BinarySearch } from './algorithms/binary-search/binary-search.component'
+import { BubbleSort } from './algorithms/bubble-sort/bubble-sort.component'
+import { MergeSort } from './algorithms/merge-sort/merge-sort.component'
+import { InsertionSort } from './algorithms/insertion-sort/insertion-sort.component'
+import { SelectionSort } from './algorithms/selection-sort/selection-sort.component'
+import { DepthFirstSearch } from './algorithms/depth-first-search/depth-first-search.component'
+import { Maze } from './algorithms/maze/maze.component'
+import { BfsVsDfs } from './algorithms/bfs-vs-dfs/bfs-vs-dfs.component'
+import { CoinChange } from './algorithms/coin-change/coin-change.component'
+import { Dijkstra } from './algorithms/dijkstra/dijkstra.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
 
 const ALGOS: AlgoMeta[] = [
+  {
+    id: 'depth-first-search',
+    label: 'Depth-First Search',
+    tag: '#DFS',
+    complexity: 'O(V + E)',
+    description: 'Start at a node. Go as deep as you can. Dead end. Backtrack.',
+  },
   {
     id: 'binary-search',
     label: 'Binary Search',
@@ -46,14 +58,47 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(n²)',
     description: 'Find the minimum element, place it at the front. Repeat.',
   },
+  {
+    id: 'maze',
+    label: 'Maze Solver',
+    tag: '#Maze',
+    complexity: 'O(V + E)',
+    description: 'Navigate a generated maze with DFS backtracking.',
+  },
+  {
+    id: 'bfs-vs-dfs',
+    label: 'BFS vs DFS',
+    tag: '#BFSvsDFS',
+    complexity: 'O(V + E)',
+    description: 'Same graph, two traversal strategies. Stack vs queue.',
+  },
+  {
+    id: 'coin-change',
+    label: 'Coin Change',
+    tag: '#DP',
+    complexity: 'O(n × amount)',
+    description: 'Find minimum coins to make change. Classic dynamic programming.',
+  },
+  {
+    id: 'dijkstra',
+    label: 'Dijkstra\'s',
+    tag: '#Dijkstra',
+    complexity: 'O((V+E) log V)',
+    description: 'Find shortest weighted path. Always process the cheapest node first.',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
+  'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
   'merge-sort': MergeSort,
   'insertion-sort': InsertionSort,
   'selection-sort': SelectionSort,
+  'maze': Maze,
+  'bfs-vs-dfs': BfsVsDfs,
+  'coin-change': CoinChange,
+  'dijkstra': Dijkstra,
 }
 
 const VIEW_OPTIONS = [
@@ -62,7 +107,7 @@ const VIEW_OPTIONS = [
 ]
 
 export function App() {
-  const [view, setView] = useState<View>('binary-search')
+  const [view, setView] = useState<View>('depth-first-search')
 
   const meta = ALGOS.find(a => a.id === view)
   const ActiveComponent = view !== 'compare' ? ALGO_COMPONENTS[view as AlgoId] : null
