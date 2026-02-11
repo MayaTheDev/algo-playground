@@ -94,6 +94,13 @@ export type AlgoId =
   | 'bfs-vs-dfs'
   | 'coin-change'
   | 'dijkstra'
+  | 'a-star'
+  | 'topological-sort'
+  | 'trie'
+  | 'sliding-window'
+  | 'two-pointers'
+  | 'monotonic-stack'
+  | 'binary-search-tree'
   | SortAlgoId
 
 export type AlgoMeta = {
@@ -101,5 +108,74 @@ export type AlgoMeta = {
   label: string
   tag: string
   complexity: string
+  description: string
+  availableFrom?: string
+}
+
+// A* Search
+export type AStarCell = {
+  row: number
+  col: number
+  state: 'empty' | 'wall' | 'start' | 'end' | 'open' | 'closed' | 'path'
+  g: number
+  f: number
+}
+export type AStarStep = { grid: AStarCell[][]; description: string }
+
+// Topological Sort
+export type TopoNode = { id: string; x: number; y: number }
+export type TopoEdge = { from: string; to: string }
+export type TopoStep = {
+  nodes: TopoNode[]
+  edges: TopoEdge[]
+  inDegrees: Record<string, number>
+  queue: string[]
+  result: string[]
+  current: string | null
+  reducedEdge: [string, string] | null
+  description: string
+}
+
+// Sliding Window
+export type WindowStep = {
+  array: string[]
+  left: number
+  right: number
+  bestLeft: number
+  bestRight: number
+  description: string
+}
+
+// Two Pointers
+export type TwoPointerStep = {
+  array: number[]
+  left: number
+  right: number
+  target: number
+  sum: number
+  found: boolean
+  description: string
+}
+
+// Monotonic Stack
+export type MonoStackStep = {
+  temperatures: number[]
+  stackIndices: number[]
+  answers: number[]
+  current: number
+  justPopped: number[]
+  description: string
+}
+
+// BST
+export type BSTNodeData = {
+  value: number
+  left: BSTNodeData | null
+  right: BSTNodeData | null
+}
+export type BSTStep = {
+  root: BSTNodeData | null
+  highlighted: number | null
+  pathValues: number[]
   description: string
 }
