@@ -17,6 +17,10 @@ An interactive visualizer for the algorithms I've been learning. Pick one. Hit p
 
 Each one I built because I learned it first. Then wanted to see it move.
 
+## Stack
+
+React · TypeScript · Vite · Tailwind CSS · Canvas / SVG
+
 ## Run it
 
 ```bash
