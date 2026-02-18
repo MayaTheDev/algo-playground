@@ -171,8 +171,11 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'binary-search-tree': BinarySearchTree,
 }
 
+const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
 const now = new Date()
-const visibleAlgos = ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now)
+const visibleAlgos = PREVIEW_ALL
+  ? ALGOS
+  : ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now)
 
 const VIEW_OPTIONS = [
   ...visibleAlgos.map(a => ({ value: a.id as View, label: a.label })),
