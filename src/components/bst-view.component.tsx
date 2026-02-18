@@ -1,3 +1,4 @@
+import React from 'react'
 import type { BSTStep, BSTNodeData } from '../types/algo.types'
 
 type Props = { step: BSTStep }
@@ -34,7 +35,7 @@ export function BSTView({ step }: Props) {
 
       {/* Edges */}
       {positioned.map(({ node, x, y }) => {
-        const results: JSX.Element[] = []
+        const results: React.ReactElement[] = []
         if (node.left) {
           const child = findPosition(positioned, node.left.value)
           if (child) {
