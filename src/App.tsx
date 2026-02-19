@@ -23,13 +23,7 @@ import type { AlgoId, AlgoMeta } from './types/algo.types'
 type View = AlgoId | 'compare'
 
 const ALGOS: AlgoMeta[] = [
-  {
-    id: 'depth-first-search',
-    label: 'Depth-First Search',
-    tag: '#DFS',
-    complexity: 'O(V + E)',
-    description: 'Start at a node. Go as deep as you can. Dead end. Backtrack.',
-  },
+  // Day 8 — searching
   {
     id: 'binary-search',
     label: 'Binary Search',
@@ -37,6 +31,7 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(log n)',
     description: 'Divide a sorted array in half each step to find a target.',
   },
+  // Days 21–22 — sorting
   {
     id: 'bubble-sort',
     label: 'Bubble Sort',
@@ -65,6 +60,14 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(n²)',
     description: 'Find the minimum element, place it at the front. Repeat.',
   },
+  // Day 23 — graph traversal
+  {
+    id: 'depth-first-search',
+    label: 'Depth-First Search',
+    tag: '#DFS',
+    complexity: 'O(V + E)',
+    description: 'Start at a node. Go as deep as you can. Dead end. Backtrack.',
+  },
   {
     id: 'maze',
     label: 'Maze Solver',
@@ -72,6 +75,7 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(V + E)',
     description: 'Navigate a generated maze with DFS backtracking.',
   },
+  // Day 24 — BFS
   {
     id: 'bfs-vs-dfs',
     label: 'BFS vs DFS',
@@ -79,6 +83,7 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(V + E)',
     description: 'Same graph, two traversal strategies. Stack vs queue.',
   },
+  // Day 25 — dynamic programming
   {
     id: 'coin-change',
     label: 'Coin Change',
@@ -86,6 +91,7 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(n × amount)',
     description: 'Find minimum coins to make change. Classic dynamic programming.',
   },
+  // Day 26 — weighted graphs
   {
     id: 'dijkstra',
     label: 'Dijkstra\'s',
