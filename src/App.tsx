@@ -11,6 +11,13 @@ import { Maze } from './algorithms/maze/maze.component'
 import { BfsVsDfs } from './algorithms/bfs-vs-dfs/bfs-vs-dfs.component'
 import { CoinChange } from './algorithms/coin-change/coin-change.component'
 import { Dijkstra } from './algorithms/dijkstra/dijkstra.component'
+import { AStar } from './algorithms/a-star/a-star.component'
+import { TopologicalSort } from './algorithms/topological-sort/topological-sort.component'
+import { Trie } from './algorithms/trie/trie.component'
+import { SlidingWindow } from './algorithms/sliding-window/sliding-window.component'
+import { TwoPointers } from './algorithms/two-pointers/two-pointers.component'
+import { MonotonicStack } from './algorithms/monotonic-stack/monotonic-stack.component'
+import { BinarySearchTree } from './algorithms/binary-search-tree/binary-search-tree.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -86,6 +93,62 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O((V+E) log V)',
     description: 'Find shortest weighted path. Always process the cheapest node first.',
   },
+  {
+    id: 'a-star',
+    label: 'A* Search',
+    tag: '#AStar',
+    complexity: 'O((V+E) log V)',
+    description: 'Pathfinding with a heuristic. f = g + h. Faster than Dijkstra\'s when direction matters.',
+    availableFrom: '2026-05-05',
+  },
+  {
+    id: 'topological-sort',
+    label: 'Topological Sort',
+    tag: '#TopoSort',
+    complexity: 'O(V+E)',
+    description: 'Order tasks by dependency. Kahn\'s algorithm with in-degree queue.',
+    availableFrom: '2026-05-07',
+  },
+  {
+    id: 'trie',
+    label: 'Trie',
+    tag: '#Trie',
+    complexity: 'O(m)',
+    description: 'Prefix tree for fast string lookup. O(prefix length) search time.',
+    availableFrom: '2026-05-14',
+  },
+  {
+    id: 'sliding-window',
+    label: 'Sliding Window',
+    tag: '#SlidingWindow',
+    complexity: 'O(n)',
+    description: 'Track a moving subarray. Add new element, remove old one. No recomputation.',
+    availableFrom: '2026-05-19',
+  },
+  {
+    id: 'two-pointers',
+    label: 'Two Pointers',
+    tag: '#TwoPointers',
+    complexity: 'O(n)',
+    description: 'Navigate a sorted array from both ends. Move the pointer that gets you closer.',
+    availableFrom: '2026-05-21',
+  },
+  {
+    id: 'monotonic-stack',
+    label: 'Monotonic Stack',
+    tag: '#MonoStack',
+    complexity: 'O(n)',
+    description: 'A stack that stays sorted. Pop everything a larger element invalidates.',
+    availableFrom: '2026-05-26',
+  },
+  {
+    id: 'binary-search-tree',
+    label: 'BST',
+    tag: '#BST',
+    complexity: 'O(log n)',
+    description: 'Binary search tree. Left < node < right. Insert, search, delete with in-order successor.',
+    availableFrom: '2026-05-28',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -99,22 +162,32 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'bfs-vs-dfs': BfsVsDfs,
   'coin-change': CoinChange,
   'dijkstra': Dijkstra,
+  'a-star': AStar,
+  'topological-sort': TopologicalSort,
+  'trie': Trie,
+  'sliding-window': SlidingWindow,
+  'two-pointers': TwoPointers,
+  'monotonic-stack': MonotonicStack,
+  'binary-search-tree': BinarySearchTree,
 }
 
+const now = new Date()
+const visibleAlgos = ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now)
+
 const VIEW_OPTIONS = [
-  ...ALGOS.map(a => ({ value: a.id as View, label: a.label })),
+  ...visibleAlgos.map(a => ({ value: a.id as View, label: a.label })),
   { value: 'compare' as View, label: 'Compare' },
 ]
 
 export function App() {
   const [view, setView] = useState<View>('depth-first-search')
 
-  const meta = ALGOS.find(a => a.id === view)
+  const meta = visibleAlgos.find(a => a.id === view)
   const ActiveComponent = view !== 'compare' ? ALGO_COMPONENTS[view as AlgoId] : null
 
   return (
     <div className="flex h-screen bg-[#020617] text-slate-200 overflow-hidden">
-      <AlgoSelector selected={view} onSelect={setView} algos={ALGOS} />
+      <AlgoSelector selected={view} onSelect={setView} algos={visibleAlgos} />
 
       <div className="flex-1 flex flex-col min-w-0 relative scanline-effect overflow-hidden">
         {/* Header */}
