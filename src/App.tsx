@@ -30,6 +30,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#BinarySearch',
     complexity: 'O(log n)',
     description: 'Divide a sorted array in half each step to find a target.',
+    day: 8,
   },
   // Days 21–22 — sorting
   {
@@ -38,6 +39,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#BubbleSort',
     complexity: 'O(n²)',
     description: 'Repeatedly swap adjacent elements that are out of order.',
+    day: 21,
   },
   {
     id: 'merge-sort',
@@ -45,6 +47,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#MergeSort',
     complexity: 'O(n log n)',
     description: 'Split, sort recursively, then merge back together.',
+    day: 21,
   },
   {
     id: 'insertion-sort',
@@ -52,6 +55,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#InsertionSort',
     complexity: 'O(n²)',
     description: 'Insert each element into its correct position one at a time.',
+    day: 22,
   },
   {
     id: 'selection-sort',
@@ -59,6 +63,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#SelectionSort',
     complexity: 'O(n²)',
     description: 'Find the minimum element, place it at the front. Repeat.',
+    day: 22,
   },
   // Day 23 — graph traversal
   {
@@ -67,6 +72,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#DFS',
     complexity: 'O(V + E)',
     description: 'Start at a node. Go as deep as you can. Dead end. Backtrack.',
+    day: 23,
   },
   {
     id: 'maze',
@@ -74,6 +80,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#Maze',
     complexity: 'O(V + E)',
     description: 'Navigate a generated maze with DFS backtracking.',
+    day: 23,
   },
   // Day 24 — BFS
   {
@@ -82,6 +89,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#BFSvsDFS',
     complexity: 'O(V + E)',
     description: 'Same graph, two traversal strategies. Stack vs queue.',
+    day: 24,
   },
   // Day 25 — dynamic programming
   {
@@ -90,6 +98,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#DP',
     complexity: 'O(n × amount)',
     description: 'Find minimum coins to make change. Classic dynamic programming.',
+    day: 25,
   },
   // Day 26 — weighted graphs
   {
@@ -98,6 +107,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#Dijkstra',
     complexity: 'O((V+E) log V)',
     description: 'Find shortest weighted path. Always process the cheapest node first.',
+    day: 26,
   },
   {
     id: 'a-star',
@@ -105,6 +115,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#AStar',
     complexity: 'O((V+E) log V)',
     description: 'Pathfinding with a heuristic. f = g + h. Faster than Dijkstra\'s when direction matters.',
+    day: 27,
     availableFrom: '2026-05-05',
   },
   {
@@ -113,6 +124,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#TopoSort',
     complexity: 'O(V+E)',
     description: 'Order tasks by dependency. Kahn\'s algorithm with in-degree queue.',
+    day: 28,
     availableFrom: '2026-05-07',
   },
   {
@@ -121,6 +133,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#Trie',
     complexity: 'O(m)',
     description: 'Prefix tree for fast string lookup. O(prefix length) search time.',
+    day: 30,
     availableFrom: '2026-05-14',
   },
   {
@@ -129,6 +142,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#SlidingWindow',
     complexity: 'O(n)',
     description: 'Track a moving subarray. Add new element, remove old one. No recomputation.',
+    day: 31,
     availableFrom: '2026-05-19',
   },
   {
@@ -137,6 +151,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#TwoPointers',
     complexity: 'O(n)',
     description: 'Navigate a sorted array from both ends. Move the pointer that gets you closer.',
+    day: 32,
     availableFrom: '2026-05-21',
   },
   {
@@ -145,6 +160,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#MonoStack',
     complexity: 'O(n)',
     description: 'A stack that stays sorted. Pop everything a larger element invalidates.',
+    day: 33,
     availableFrom: '2026-05-26',
   },
   {
@@ -153,6 +169,7 @@ const ALGOS: AlgoMeta[] = [
     tag: '#BST',
     complexity: 'O(log n)',
     description: 'Binary search tree. Left < node < right. Insert, search, delete with in-order successor.',
+    day: 34,
     availableFrom: '2026-05-28',
   },
 ]
@@ -178,6 +195,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
+const WEBSITE_URL: string = import.meta.env.VITE_WEBSITE_URL || 'https://mayathedev.com'
 const now = new Date()
 const visibleAlgos = PREVIEW_ALL
   ? ALGOS
@@ -196,7 +214,7 @@ export function App() {
 
   return (
     <div className="flex h-screen bg-[#020617] text-slate-200 overflow-hidden">
-      <AlgoSelector selected={view} onSelect={setView} algos={visibleAlgos} />
+      <AlgoSelector selected={view} onSelect={setView} algos={visibleAlgos} websiteUrl={WEBSITE_URL} />
 
       <div className="flex-1 flex flex-col min-w-0 relative scanline-effect overflow-hidden">
         {/* Header */}
