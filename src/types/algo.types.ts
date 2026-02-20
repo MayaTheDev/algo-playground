@@ -109,6 +109,7 @@ export type AlgoMeta = {
   tag: string
   complexity: string
   description: string
+  day: number
   availableFrom?: string
 }
 
