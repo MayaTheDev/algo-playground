@@ -18,6 +18,7 @@ import { SlidingWindow } from './algorithms/sliding-window/sliding-window.compon
 import { TwoPointers } from './algorithms/two-pointers/two-pointers.component'
 import { MonotonicStack } from './algorithms/monotonic-stack/monotonic-stack.component'
 import { BinarySearchTree } from './algorithms/binary-search-tree/binary-search-tree.component'
+import { Heap } from './algorithms/heap/heap.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -172,6 +173,15 @@ const ALGOS: AlgoMeta[] = [
     day: 34,
     availableFrom: '2026-05-28',
   },
+  {
+    id: 'heap',
+    label: 'Heap',
+    tag: '#Heap',
+    complexity: 'O(log n)',
+    description: 'Priority queue core. Bubble values up on insert, sift them down on extract.',
+    day: 35,
+    availableFrom: '2026-06-02',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -192,6 +202,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'two-pointers': TwoPointers,
   'monotonic-stack': MonotonicStack,
   'binary-search-tree': BinarySearchTree,
+  'heap': Heap,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -215,6 +226,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   32: 'two-pointers',
   33: 'monotonic-stack',
   34: 'binary-search-tree',
+  35: 'heap',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

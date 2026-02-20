@@ -101,6 +101,7 @@ export type AlgoId =
   | 'two-pointers'
   | 'monotonic-stack'
   | 'binary-search-tree'
+  | 'heap'
   | SortAlgoId
 
 export type AlgoMeta = {
