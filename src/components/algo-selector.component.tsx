@@ -6,9 +6,10 @@ type Props = {
   selected: View
   onSelect: (id: View) => void
   algos: AlgoMeta[]
+  websiteUrl: string
 }
 
-export function AlgoSelector({ selected, onSelect, algos }: Props) {
+export function AlgoSelector({ selected, onSelect, algos, websiteUrl }: Props) {
   return (
     <aside className="w-48 shrink-0 border-r border-slate-800 flex-col overflow-y-auto hidden md:flex">
       <div className="px-3 py-3 border-b border-slate-800">
@@ -27,7 +28,18 @@ export function AlgoSelector({ selected, onSelect, algos }: Props) {
             }`}
           >
             <span className="block font-mono">{algo.label}</span>
-            <span className="block text-[10px] text-slate-600 mt-0.5">{algo.complexity}</span>
+            <div className="flex items-center gap-2 mt-0.5">
+              <span className="text-[10px] text-slate-600">{algo.complexity}</span>
+              <a
+                href={`${websiteUrl}/story#day-${algo.day}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="text-[9px] font-mono text-slate-700 hover:text-emerald-600 transition-colors"
+              >
+                day {algo.day}
+              </a>
+            </div>
           </button>
         ))}
 
