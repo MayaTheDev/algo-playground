@@ -19,6 +19,7 @@ import { TwoPointers } from './algorithms/two-pointers/two-pointers.component'
 import { MonotonicStack } from './algorithms/monotonic-stack/monotonic-stack.component'
 import { BinarySearchTree } from './algorithms/binary-search-tree/binary-search-tree.component'
 import { Heap } from './algorithms/heap/heap.component'
+import { UrlShortener } from './algorithms/url-shortener/url-shortener.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -182,6 +183,15 @@ const ALGOS: AlgoMeta[] = [
     day: 35,
     availableFrom: '2026-06-02',
   },
+  {
+    id: 'url-shortener',
+    label: 'URL Shortener',
+    tag: '#SystemDesign',
+    complexity: 'O(1) avg',
+    description: 'Create short codes, store mappings, and serve redirects with cache and analytics in the loop.',
+    day: 36,
+    availableFrom: '2026-06-04',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -203,6 +213,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'monotonic-stack': MonotonicStack,
   'binary-search-tree': BinarySearchTree,
   'heap': Heap,
+  'url-shortener': UrlShortener,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -227,6 +238,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   33: 'monotonic-stack',
   34: 'binary-search-tree',
   35: 'heap',
+  36: 'url-shortener',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

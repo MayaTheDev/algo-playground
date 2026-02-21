@@ -102,6 +102,7 @@ export type AlgoId =
   | 'monotonic-stack'
   | 'binary-search-tree'
   | 'heap'
+  | 'url-shortener'
   | SortAlgoId
 
 export type AlgoMeta = {
