@@ -20,6 +20,7 @@ import { MonotonicStack } from './algorithms/monotonic-stack/monotonic-stack.com
 import { BinarySearchTree } from './algorithms/binary-search-tree/binary-search-tree.component'
 import { Heap } from './algorithms/heap/heap.component'
 import { UrlShortener } from './algorithms/url-shortener/url-shortener.component'
+import { AvlTree } from './algorithms/avl-tree/avl-tree.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -192,6 +193,15 @@ const ALGOS: AlgoMeta[] = [
     day: 36,
     availableFrom: '2026-06-04',
   },
+  {
+    id: 'avl-tree',
+    label: 'AVL Tree',
+    tag: '#AVL',
+    complexity: 'O(log n)',
+    description: 'A self-balancing BST. Rotations keep lookup cost from collapsing to linear time.',
+    day: 37,
+    availableFrom: '2026-06-09',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -214,6 +224,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'binary-search-tree': BinarySearchTree,
   'heap': Heap,
   'url-shortener': UrlShortener,
+  'avl-tree': AvlTree,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -239,6 +250,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   34: 'binary-search-tree',
   35: 'heap',
   36: 'url-shortener',
+  37: 'avl-tree',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

@@ -103,6 +103,7 @@ export type AlgoId =
   | 'binary-search-tree'
   | 'heap'
   | 'url-shortener'
+  | 'avl-tree'
   | SortAlgoId
 
 export type AlgoMeta = {
