@@ -21,6 +21,7 @@ import { BinarySearchTree } from './algorithms/binary-search-tree/binary-search-
 import { Heap } from './algorithms/heap/heap.component'
 import { UrlShortener } from './algorithms/url-shortener/url-shortener.component'
 import { AvlTree } from './algorithms/avl-tree/avl-tree.component'
+import { HeuristicCheck } from './algorithms/heuristic-check/heuristic-check.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -202,6 +203,15 @@ const ALGOS: AlgoMeta[] = [
     day: 37,
     availableFrom: '2026-06-09',
   },
+  {
+    id: 'heuristic-check',
+    label: 'Heuristic Check',
+    tag: '#AStar',
+    complexity: 'f(n) = g + h',
+    description: 'A* only stays trustworthy when the heuristic stays honest about the distance remaining.',
+    day: 39,
+    availableFrom: '2026-06-16',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -225,6 +235,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'heap': Heap,
   'url-shortener': UrlShortener,
   'avl-tree': AvlTree,
+  'heuristic-check': HeuristicCheck,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -251,6 +262,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   35: 'heap',
   36: 'url-shortener',
   37: 'avl-tree',
+  39: 'heuristic-check',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

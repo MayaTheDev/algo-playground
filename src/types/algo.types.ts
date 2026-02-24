@@ -104,6 +104,7 @@ export type AlgoId =
   | 'heap'
   | 'url-shortener'
   | 'avl-tree'
+  | 'heuristic-check'
   | SortAlgoId
 
 export type AlgoMeta = {
