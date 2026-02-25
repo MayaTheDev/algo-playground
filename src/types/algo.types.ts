@@ -105,6 +105,7 @@ export type AlgoId =
   | 'url-shortener'
   | 'avl-tree'
   | 'heuristic-check'
+  | 'kmp'
   | SortAlgoId
 
 export type AlgoMeta = {

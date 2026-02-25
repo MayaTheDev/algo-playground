@@ -22,6 +22,7 @@ import { Heap } from './algorithms/heap/heap.component'
 import { UrlShortener } from './algorithms/url-shortener/url-shortener.component'
 import { AvlTree } from './algorithms/avl-tree/avl-tree.component'
 import { HeuristicCheck } from './algorithms/heuristic-check/heuristic-check.component'
+import { Kmp } from './algorithms/kmp/kmp.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -212,6 +213,15 @@ const ALGOS: AlgoMeta[] = [
     day: 39,
     availableFrom: '2026-06-16',
   },
+  {
+    id: 'kmp',
+    label: 'KMP',
+    tag: '#KMP',
+    complexity: 'O(n + m)',
+    description: 'String matching without backtracking. Reuse what the mismatch already taught you.',
+    day: 40,
+    availableFrom: '2026-06-18',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -236,6 +246,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'url-shortener': UrlShortener,
   'avl-tree': AvlTree,
   'heuristic-check': HeuristicCheck,
+  'kmp': Kmp,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -263,6 +274,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   36: 'url-shortener',
   37: 'avl-tree',
   39: 'heuristic-check',
+  40: 'kmp',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {
