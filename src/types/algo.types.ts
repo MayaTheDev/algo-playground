@@ -106,6 +106,7 @@ export type AlgoId =
   | 'avl-tree'
   | 'heuristic-check'
   | 'kmp'
+  | 'hash-table'
   | SortAlgoId
 
 export type AlgoMeta = {

@@ -23,6 +23,7 @@ import { UrlShortener } from './algorithms/url-shortener/url-shortener.component
 import { AvlTree } from './algorithms/avl-tree/avl-tree.component'
 import { HeuristicCheck } from './algorithms/heuristic-check/heuristic-check.component'
 import { Kmp } from './algorithms/kmp/kmp.component'
+import { HashTable } from './algorithms/hash-table/hash-table.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -222,6 +223,15 @@ const ALGOS: AlgoMeta[] = [
     day: 40,
     availableFrom: '2026-06-18',
   },
+  {
+    id: 'hash-table',
+    label: 'Hash Table',
+    tag: '#HashTable',
+    complexity: 'O(1) avg',
+    description: 'Store by bucket, then resolve collisions with chaining or probing when reality gets messy.',
+    day: 41,
+    availableFrom: '2026-06-23',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -247,6 +257,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'avl-tree': AvlTree,
   'heuristic-check': HeuristicCheck,
   'kmp': Kmp,
+  'hash-table': HashTable,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -275,6 +286,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   37: 'avl-tree',
   39: 'heuristic-check',
   40: 'kmp',
+  41: 'hash-table',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {
