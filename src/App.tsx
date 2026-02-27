@@ -24,6 +24,7 @@ import { AvlTree } from './algorithms/avl-tree/avl-tree.component'
 import { HeuristicCheck } from './algorithms/heuristic-check/heuristic-check.component'
 import { Kmp } from './algorithms/kmp/kmp.component'
 import { HashTable } from './algorithms/hash-table/hash-table.component'
+import { TokenBucket } from './algorithms/token-bucket/token-bucket.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -232,6 +233,15 @@ const ALGOS: AlgoMeta[] = [
     day: 41,
     availableFrom: '2026-06-23',
   },
+  {
+    id: 'token-bucket',
+    label: 'Token Bucket',
+    tag: '#RateLimiter',
+    complexity: 'O(1)',
+    description: 'Absorb bursts, refill over time, and make the limit flexible instead of brittle.',
+    day: 42,
+    availableFrom: '2026-06-25',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -258,6 +268,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'heuristic-check': HeuristicCheck,
   'kmp': Kmp,
   'hash-table': HashTable,
+  'token-bucket': TokenBucket,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -287,6 +298,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   39: 'heuristic-check',
   40: 'kmp',
   41: 'hash-table',
+  42: 'token-bucket',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

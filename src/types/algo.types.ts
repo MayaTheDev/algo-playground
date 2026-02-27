@@ -107,6 +107,7 @@ export type AlgoId =
   | 'heuristic-check'
   | 'kmp'
   | 'hash-table'
+  | 'token-bucket'
   | SortAlgoId
 
 export type AlgoMeta = {
