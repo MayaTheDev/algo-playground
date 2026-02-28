@@ -201,13 +201,69 @@ const visibleAlgos = PREVIEW_ALL
   ? ALGOS
   : ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now)
 
+const FALLBACK_ALGO: AlgoId = 'depth-first-search'
+const DAY_VIEWS: Partial<Record<number, View>> = {
+  21: 'compare',
+  23: 'maze',
+  24: 'bfs-vs-dfs',
+  25: 'coin-change',
+  26: 'dijkstra',
+  27: 'a-star',
+  28: 'topological-sort',
+  30: 'trie',
+  31: 'sliding-window',
+  32: 'two-pointers',
+  33: 'monotonic-stack',
+  34: 'binary-search-tree',
+}
+
+function isAlgoId(value: string | null): value is AlgoId {
+  return value !== null && ALGOS.some((algo) => algo.id === value)
+}
+
+function isView(value: string | null): value is View {
+  return value === 'compare' || isAlgoId(value)
+}
+
+function isAvailableView(view: View): boolean {
+  return view === 'compare' || visibleAlgos.some((algo) => algo.id === view)
+}
+
+function getDayView(value: string | null): View | null {
+  if (value === null) return null
+
+  const day = Number.parseInt(value, 10)
+  if (Number.isNaN(day)) return null
+
+  const mappedView = DAY_VIEWS[day]
+  return mappedView && isAvailableView(mappedView) ? mappedView : null
+}
+
+function getInitialView(): View {
+  if (typeof window === 'undefined') return FALLBACK_ALGO
+
+  const params = new URLSearchParams(window.location.search)
+  const requestedView = params.get('algo') ?? params.get('view')
+
+  if (isView(requestedView) && isAvailableView(requestedView)) {
+    return requestedView
+  }
+
+  const dayView = getDayView(params.get('day'))
+  if (dayView) {
+    return dayView
+  }
+
+  return FALLBACK_ALGO
+}
+
 const VIEW_OPTIONS = [
   ...visibleAlgos.map(a => ({ value: a.id as View, label: a.label })),
   { value: 'compare' as View, label: 'Compare' },
 ]
 
 export function App() {
-  const [view, setView] = useState<View>('depth-first-search')
+  const [view, setView] = useState<View>(getInitialView)
 
   const meta = visibleAlgos.find(a => a.id === view)
   const ActiveComponent = view !== 'compare' ? ALGO_COMPONENTS[view as AlgoId] : null
