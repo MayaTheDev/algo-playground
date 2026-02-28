@@ -108,6 +108,7 @@ export type AlgoId =
   | 'kmp'
   | 'hash-table'
   | 'token-bucket'
+  | 'lru-cache'
   | SortAlgoId
 
 export type AlgoMeta = {

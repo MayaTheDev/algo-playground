@@ -25,6 +25,7 @@ import { HeuristicCheck } from './algorithms/heuristic-check/heuristic-check.com
 import { Kmp } from './algorithms/kmp/kmp.component'
 import { HashTable } from './algorithms/hash-table/hash-table.component'
 import { TokenBucket } from './algorithms/token-bucket/token-bucket.component'
+import { LruCache } from './algorithms/lru-cache/lru-cache.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
@@ -242,6 +243,15 @@ const ALGOS: AlgoMeta[] = [
     day: 42,
     availableFrom: '2026-06-25',
   },
+  {
+    id: 'lru-cache',
+    label: 'LRU Cache',
+    tag: '#LRU',
+    complexity: 'O(1)',
+    description: 'Hash map for lookup, doubly-linked list for recency. Evict the stalest item instantly.',
+    day: 43,
+    availableFrom: '2026-06-30',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -269,6 +279,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'kmp': Kmp,
   'hash-table': HashTable,
   'token-bucket': TokenBucket,
+  'lru-cache': LruCache,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -299,6 +310,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   40: 'kmp',
   41: 'hash-table',
   42: 'token-bucket',
+  43: 'lru-cache',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {
