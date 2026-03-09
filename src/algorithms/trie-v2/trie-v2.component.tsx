@@ -105,6 +105,10 @@ type TreeViewProps = { step: TrieV2Step }
 function TrieTreeView({ step }: TreeViewProps) {
   const { words, highlightPath, phase } = step
   const nodes = useMemo(() => buildLayout(words), [words])
+  const viewBoxHeight = useMemo(() => {
+    const maxY = nodes.reduce((bottom, node) => Math.max(bottom, node.y), 0)
+    return Math.max(100, maxY + 12)
+  }, [nodes])
 
   // Build a set of full path prefixes that are on the highlight path
   const highlightSet = useMemo(() => {
@@ -120,8 +124,8 @@ function TrieTreeView({ step }: TreeViewProps) {
   const isDeletePhase = phase === 'delete'
 
   return (
-    <svg viewBox="0 0 100 100" className="w-full h-full" style={{ maxHeight: '100%' }}>
-      <rect x={0} y={0} width={100} height={100} fill="#020617" />
+    <svg viewBox={`0 0 100 ${viewBoxHeight}`} className="h-full w-full max-w-full" preserveAspectRatio="xMidYMid meet">
+      <rect x={0} y={0} width={100} height={viewBoxHeight} fill="#020617" />
 
       {/* Root label */}
       <text x={50} y={5.5} textAnchor="middle" fontSize="2.8" fontFamily="monospace" fill="#475569">
@@ -215,7 +219,7 @@ function SuggestionsPanel({ step }: SuggestionsPanelProps) {
   const { suggestions, prefix, words } = step
 
   return (
-    <div className="grid gap-3 md:grid-cols-2 xl:flex xl:min-w-[220px] xl:max-w-[260px] xl:flex-col">
+    <div className="grid gap-3 md:grid-cols-2 xl:flex xl:w-full xl:min-w-0 xl:max-w-none xl:flex-col">
       {/* Words in trie */}
       <div>
         <p className="text-[9px] text-slate-600 uppercase tracking-widest mb-1.5">in trie ({words.length})</p>
@@ -263,7 +267,7 @@ export function TrieV2() {
   return (
     <div className="flex flex-col h-full bg-slate-950">
       {/* Main area */}
-      <div className="flex-1 flex flex-col gap-3 p-3 overflow-hidden min-h-0 xl:flex-row">
+      <div className="grid flex-1 min-h-0 gap-3 overflow-auto p-3 xl:grid-cols-[minmax(0,1fr)_240px]">
         {/* Tree visualization */}
         <div className="flex-1 flex flex-col min-w-0 min-h-0">
           {/* Phase badge */}
