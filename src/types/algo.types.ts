@@ -111,6 +111,7 @@ export type AlgoId =
   | 'day-38-game'
   | 'day-50-game'
   | 'day-54-game'
+  | 'day-55-game'
   | 'binary-search'
   | 'depth-first-search'
   | 'maze'

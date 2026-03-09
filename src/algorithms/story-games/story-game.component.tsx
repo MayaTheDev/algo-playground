@@ -739,6 +739,11 @@ export const STORY_GAME_CONFIGS = {
     { labels: ['observe stale write', 'name the race', 'pause the shortcut', 'add the guard'] },
     { labels: ['take the lock', 'write once', 'release cleanly', 'check the log'] },
   ]),
+  'day-55-game': choice('day-55-game', 55, 'Second Round Prep', 'Pick the tradeoff Maya can defend when the follow-up questions start.', [
+    { prompt: 'The first solution works, but the interviewer asks about contention.', options: ['repeat the code louder', 'talk through the shared state'], correct: 1, note: 'The design question starts where the code stops.' },
+    { prompt: 'A cache makes the demo fast but stale data can leak through.', options: ['hide the edge case', 'name the invalidation path'], correct: 1, note: 'Owning the edge case is stronger than pretending it vanished.' },
+    { prompt: 'The room pushes for one perfect answer.', options: ['choose without tradeoffs', 'state the constraint first'], correct: 1, note: 'Constraints make the answer defensible.' },
+  ]),
 } satisfies Record<string, StoryGameConfig>
 
 export type StoryGameId = keyof typeof STORY_GAME_CONFIGS

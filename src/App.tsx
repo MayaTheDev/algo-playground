@@ -68,6 +68,7 @@ const Day29Game = createStoryGame('day-29-game')
 const Day38Game = createStoryGame('day-38-game')
 const Day50Game = createStoryGame('day-50-game')
 const Day54Game = createStoryGame('day-54-game')
+const Day55Game = createStoryGame('day-55-game')
 
 const ALGOS: AlgoMeta[] = [
   // Story mini-games for days without algorithm modules
@@ -255,6 +256,15 @@ const ALGOS: AlgoMeta[] = [
     description: 'Put the distributed handoff back in order before the next system-design round starts.',
     day: 54,
     availableFrom: '2026-08-06',
+  },
+  {
+    id: 'day-55-game',
+    label: 'Second Round Prep',
+    tag: '#Interview',
+    complexity: 'game',
+    description: 'Pick the tradeoff Maya can defend when the follow-up questions start.',
+    day: 55,
+    availableFrom: '2026-08-11',
   },
   // Day 8 — searching
   {
@@ -643,6 +653,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'day-38-game': Day38Game,
   'day-50-game': Day50Game,
   'day-54-game': Day54Game,
+  'day-55-game': Day55Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -687,9 +698,11 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
 const WEBSITE_URL: string = import.meta.env.VITE_WEBSITE_URL || 'https://mayathedev.com'
 const now = new Date()
-const visibleAlgos = PREVIEW_ALL
+const visibleAlgos = (PREVIEW_ALL
   ? ALGOS
-  : ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now)
+  : ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now))
+  .slice()
+  .sort((a, b) => a.day - b.day || a.label.localeCompare(b.label))
 
 const FALLBACK_ALGO: AlgoId = 'depth-first-search'
 const DAY_VIEWS: Partial<Record<number, View>> = {
@@ -747,6 +760,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   52: 'crdt',
   53: 'vector-clock-v2',
   54: 'day-54-game',
+  55: 'day-55-game',
   56: 'bellman-ford',
   57: 'topological-sort-v2',
   58: 'a-star-precise',
