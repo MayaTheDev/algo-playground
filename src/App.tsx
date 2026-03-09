@@ -26,11 +26,220 @@ import { Kmp } from './algorithms/kmp/kmp.component'
 import { HashTable } from './algorithms/hash-table/hash-table.component'
 import { TokenBucket } from './algorithms/token-bucket/token-bucket.component'
 import { LruCache } from './algorithms/lru-cache/lru-cache.component'
+import { ConsistentHashing } from './algorithms/consistent-hashing/consistent-hashing.component'
+import { SegmentTree } from './algorithms/segment-tree/segment-tree.component'
+import { IntervalScheduling } from './algorithms/interval-scheduling/interval-scheduling.component'
+import { TrieV2 } from './algorithms/trie-v2/trie-v2.component'
+import { XorFold } from './algorithms/xor-fold/xor-fold.component'
+import { VectorClock } from './algorithms/vector-clock/vector-clock.component'
+import { FenwickTree } from './algorithms/fenwick-tree/fenwick-tree.component'
+import { Crdt } from './algorithms/crdt/crdt.component'
+import { createStoryGame } from './algorithms/story-games/story-game.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
 type View = AlgoId | 'compare'
 
+const Day1Game = createStoryGame('day-1-game')
+const Day2Game = createStoryGame('day-2-game')
+const Day3Game = createStoryGame('day-3-game')
+const Day4Game = createStoryGame('day-4-game')
+const Day5Game = createStoryGame('day-5-game')
+const Day6Game = createStoryGame('day-6-game')
+const Day7Game = createStoryGame('day-7-game')
+const Day9Game = createStoryGame('day-9-game')
+const Day10Game = createStoryGame('day-10-game')
+const Day11Game = createStoryGame('day-11-game')
+const Day12Game = createStoryGame('day-12-game')
+const Day13Game = createStoryGame('day-13-game')
+const Day14Game = createStoryGame('day-14-game')
+const Day15Game = createStoryGame('day-15-game')
+const Day16Game = createStoryGame('day-16-game')
+const Day17Game = createStoryGame('day-17-game')
+const Day18Game = createStoryGame('day-18-game')
+const Day19Game = createStoryGame('day-19-game')
+const Day20Game = createStoryGame('day-20-game')
+const Day29Game = createStoryGame('day-29-game')
+const Day38Game = createStoryGame('day-38-game')
+const Day50Game = createStoryGame('day-50-game')
+
 const ALGOS: AlgoMeta[] = [
+  // Story mini-games for days without algorithm modules
+  {
+    id: 'day-1-game',
+    label: 'Path Splitter',
+    tag: '#Choice',
+    complexity: 'game',
+    description: 'Choose the tradeoff that makes the 90-day run durable.',
+    day: 1,
+  },
+  {
+    id: 'day-2-game',
+    label: 'Durable Path',
+    tag: '#Fundamentals',
+    complexity: 'game',
+    description: 'Stay on Path B long enough for the quiet work to count.',
+    day: 2,
+  },
+  {
+    id: 'day-3-game',
+    label: 'Complexity Dodge',
+    tag: '#BigO',
+    complexity: 'game',
+    description: 'Catch honest runtime signals. Avoid vague familiarity.',
+    day: 3,
+  },
+  {
+    id: 'day-4-game',
+    label: 'Flashlight Checklist',
+    tag: '#BigO',
+    complexity: 'game',
+    description: 'Rebuild the Big-O checklist in the right order.',
+    day: 4,
+  },
+  {
+    id: 'day-5-game',
+    label: 'Inbox Defense',
+    tag: '#Recruiter',
+    complexity: 'game',
+    description: 'Handle the DM without losing the thread of the work.',
+    day: 5,
+  },
+  {
+    id: 'day-6-game',
+    label: 'Recursive Avalanche',
+    tag: '#Memoization',
+    complexity: 'game',
+    description: 'Stop duplicate calls before the stack collapses.',
+    day: 6,
+  },
+  {
+    id: 'day-7-game',
+    label: 'The Notebook',
+    tag: '#Memoization',
+    complexity: 'game',
+    description: 'Put the memoization notebook back together.',
+    day: 7,
+  },
+  {
+    id: 'day-9-game',
+    label: 'Hash Map Grab',
+    tag: '#HashMap',
+    complexity: 'game',
+    description: 'Catch complements. Ignore brute force bait.',
+    day: 9,
+  },
+  {
+    id: 'day-10-game',
+    label: 'Bracket Lock',
+    tag: '#Stack',
+    complexity: 'game',
+    description: 'Match editor brackets without losing the stack.',
+    day: 10,
+  },
+  {
+    id: 'day-11-game',
+    label: 'Meetup Nerve',
+    tag: '#Community',
+    complexity: 'game',
+    description: 'Cross the room without pretending confidence is required.',
+    day: 11,
+  },
+  {
+    id: 'day-12-game',
+    label: 'Seed Sketch',
+    tag: '#Builder',
+    complexity: 'game',
+    description: 'Grow the first project sketch from a rough idea.',
+    day: 12,
+  },
+  {
+    id: 'day-13-game',
+    label: 'Cursor Thaw',
+    tag: '#Builder',
+    complexity: 'game',
+    description: 'Tune the cursor out of the blank-page freeze.',
+    day: 13,
+  },
+  {
+    id: 'day-14-game',
+    label: 'Git Init Run',
+    tag: '#Git',
+    complexity: 'game',
+    description: 'Run the tiny command sequence that turns a folder into a project.',
+    day: 14,
+  },
+  {
+    id: 'day-15-game',
+    label: 'One Character Hunt',
+    tag: '#Debugging',
+    complexity: 'game',
+    description: 'Find the single character that breaks the whole run.',
+    day: 15,
+  },
+  {
+    id: 'day-16-game',
+    label: 'First Push',
+    tag: '#Git',
+    complexity: 'game',
+    description: 'Push the public repo without skipping a step.',
+    day: 16,
+  },
+  {
+    id: 'day-17-game',
+    label: 'Invisible Graph',
+    tag: '#Graphs',
+    complexity: 'game',
+    description: 'Catch visible nodes and edges before the idea disappears.',
+    day: 17,
+  },
+  {
+    id: 'day-18-game',
+    label: 'Algorithm Lens',
+    tag: '#Visualization',
+    complexity: 'game',
+    description: 'Turn an abstract algorithm into something someone can see.',
+    day: 18,
+  },
+  {
+    id: 'day-19-game',
+    label: 'Localhost Runner',
+    tag: '#Localhost',
+    complexity: 'game',
+    description: 'Collect green dev-server signals. Dodge broken page states.',
+    day: 19,
+  },
+  {
+    id: 'day-20-game',
+    label: 'Zero Visitors',
+    tag: '#Analytics',
+    complexity: 'game',
+    description: 'Balance analytics temptation against actual shipping.',
+    day: 20,
+  },
+  {
+    id: 'day-29-game',
+    label: 'Nelly Reply',
+    tag: '#Conversation',
+    complexity: 'game',
+    description: 'Answer the message without giving away your center.',
+    day: 29,
+  },
+  {
+    id: 'day-38-game',
+    label: 'Dolores Park Battery',
+    tag: '#Community',
+    complexity: 'game',
+    description: 'Collect connection without draining the whole social battery.',
+    day: 38,
+  },
+  {
+    id: 'day-50-game',
+    label: 'Signal Loop',
+    tag: '#Memory',
+    complexity: 'game',
+    description: 'Tune memory fragments until the signal resolves.',
+    day: 50,
+  },
   // Day 8 — searching
   {
     id: 'binary-search',
@@ -252,9 +461,111 @@ const ALGOS: AlgoMeta[] = [
     day: 43,
     availableFrom: '2026-06-30',
   },
+  // Day 44 — Segment Tree (Sandra)
+  {
+    id: 'segment-tree',
+    label: 'Segment Tree',
+    tag: '#SegmentTree',
+    complexity: 'O(log n)',
+    description: 'Range min queries and point updates in O(log n). Build once, query many times.',
+    day: 44,
+    availableFrom: '2026-07-02',
+  },
+  // Day 45 — Trie v2 (The Seed)
+  {
+    id: 'trie-v2',
+    label: 'Trie v2',
+    tag: '#Trie',
+    complexity: 'O(m)',
+    description: 'Prefix tree upgraded: deletion with shared-prefix safety, ranked autocomplete, step-by-step ops.',
+    day: 45,
+    availableFrom: '2026-07-07',
+  },
+  // Day 46 — Fenwick Tree (Laundromat Reprise)
+  {
+    id: 'fenwick-tree',
+    label: 'Fenwick Tree',
+    tag: '#BIT',
+    complexity: 'O(log n)',
+    description: 'Binary Indexed Tree. Prefix sums and point updates in O(log n) using the lowest set bit trick.',
+    day: 46,
+    availableFrom: '2026-07-09',
+  },
+  // Day 47 — Interval Scheduling (The Other Path)
+  {
+    id: 'interval-scheduling',
+    label: 'Interval Scheduling',
+    tag: '#Greedy',
+    complexity: 'O(n log n)',
+    description: 'Maximize non-overlapping meetings. Sort by end time, greedily pick the earliest finish.',
+    day: 47,
+    availableFrom: '2026-07-14',
+  },
+  // Day 48 — Vector Clock (The Run)
+  {
+    id: 'vector-clock',
+    label: 'Vector Clock',
+    tag: '#DistributedSystems',
+    complexity: 'O(n) per event',
+    description: 'Track causality across distributed nodes. Each event carries a vector of per-node counters.',
+    day: 48,
+    availableFrom: '2026-07-16',
+  },
+  // Day 49 — Consistent Hashing (Consistency)
+  {
+    id: 'consistent-hashing',
+    label: 'Consistent Hashing',
+    tag: '#SystemDesign',
+    complexity: 'O(log N)',
+    description: 'Map servers and keys to a ring. Add or remove a node and only O(K/N) keys move.',
+    day: 49,
+    availableFrom: '2026-07-21',
+  },
+  // Day 51 — XOR / Bit Manipulation (After the Dream)
+  {
+    id: 'xor-fold',
+    label: 'XOR / Bit Fold',
+    tag: '#BitManipulation',
+    complexity: 'O(n)',
+    description: 'Find the single non-duplicate in O(n) time and O(1) space using XOR self-cancellation.',
+    day: 51,
+    availableFrom: '2026-07-28',
+  },
+  // Day 52 — CRDT (Chloe)
+  {
+    id: 'crdt',
+    label: 'CRDT',
+    tag: '#DistributedSystems',
+    complexity: 'O(1) merge',
+    description: 'Conflict-free replicated data types. Two users edit simultaneously, both converge without coordination.',
+    day: 52,
+    availableFrom: '2026-07-30',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
+  'day-1-game': Day1Game,
+  'day-2-game': Day2Game,
+  'day-3-game': Day3Game,
+  'day-4-game': Day4Game,
+  'day-5-game': Day5Game,
+  'day-6-game': Day6Game,
+  'day-7-game': Day7Game,
+  'day-9-game': Day9Game,
+  'day-10-game': Day10Game,
+  'day-11-game': Day11Game,
+  'day-12-game': Day12Game,
+  'day-13-game': Day13Game,
+  'day-14-game': Day14Game,
+  'day-15-game': Day15Game,
+  'day-16-game': Day16Game,
+  'day-17-game': Day17Game,
+  'day-18-game': Day18Game,
+  'day-19-game': Day19Game,
+  'day-20-game': Day20Game,
+  'day-29-game': Day29Game,
+  'day-38-game': Day38Game,
+  'day-50-game': Day50Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -280,6 +591,14 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'hash-table': HashTable,
   'token-bucket': TokenBucket,
   'lru-cache': LruCache,
+  'consistent-hashing': ConsistentHashing,
+  'segment-tree': SegmentTree,
+  'interval-scheduling': IntervalScheduling,
+  'trie-v2': TrieV2,
+  'xor-fold': XorFold,
+  'vector-clock': VectorClock,
+  'fenwick-tree': FenwickTree,
+  'crdt': Crdt,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -291,7 +610,31 @@ const visibleAlgos = PREVIEW_ALL
 
 const FALLBACK_ALGO: AlgoId = 'depth-first-search'
 const DAY_VIEWS: Partial<Record<number, View>> = {
+  1: 'day-1-game',
+  2: 'day-2-game',
+  3: 'day-3-game',
+  4: 'day-4-game',
+  5: 'day-5-game',
+  6: 'day-6-game',
+  7: 'day-7-game',
+  8: 'binary-search',
+  9: 'day-9-game',
+  10: 'day-10-game',
+  11: 'day-11-game',
+  12: 'day-12-game',
+  13: 'day-13-game',
+  14: 'day-14-game',
+  15: 'day-15-game',
+  16: 'day-16-game',
+  17: 'day-17-game',
+  18: 'day-18-game',
+  19: 'day-19-game',
+  20: 'day-20-game',
+  29: 'day-29-game',
+  38: 'day-38-game',
+  50: 'day-50-game',
   21: 'compare',
+  22: 'compare',
   23: 'maze',
   24: 'bfs-vs-dfs',
   25: 'coin-change',
@@ -311,6 +654,14 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   41: 'hash-table',
   42: 'token-bucket',
   43: 'lru-cache',
+  44: 'segment-tree',
+  45: 'trie-v2',
+  46: 'fenwick-tree',
+  47: 'interval-scheduling',
+  48: 'vector-clock',
+  49: 'consistent-hashing',
+  51: 'xor-fold',
+  52: 'crdt',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {
