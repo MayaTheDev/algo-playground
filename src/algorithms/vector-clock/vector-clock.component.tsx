@@ -42,7 +42,6 @@ const ARROW_HEAD = 7           // arrowhead size
 
 function VectorClockView({ step }: { step: VectorClockStep }) {
   // SVG dimensions — computed from event count
-  const eventsPerRow = 10
   const totalEvents = Math.max(step.events.length, 1)
 
   // Assign each event a horizontal position (slot) and row (node)
@@ -83,13 +82,13 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
   const activeClock = currentEvent ? step.nodes.find((node) => node.id === currentEvent.node)?.clock : null
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full max-w-full space-y-4 overflow-x-hidden">
       {/* Main SVG canvas */}
-      <div className="rounded border border-slate-800 bg-slate-950/60 overflow-x-auto">
+      <div className="max-w-full overflow-x-auto rounded border border-slate-800 bg-slate-950/60">
         <svg
           width={svgWidth}
           height={svgHeight}
-          className="block min-w-full"
+          className="block min-w-full max-w-none"
           style={{ fontFamily: 'ui-monospace, monospace' }}
         >
           {/* Arrow defs */}
@@ -188,8 +187,6 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
           {eventPositions.map((pos, globalIdx) => {
             const ev = step.events[globalIdx]
             const isActive = step.currentEvent === globalIdx
-            const colors = NODE_COLORS[ev.node]
-            const typeStyle = EVENT_TYPE_STYLE[ev.type]
             const isSendOrReceive = ev.type === 'send' || ev.type === 'receive'
 
             return (
@@ -264,9 +261,9 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
         </svg>
       </div>
 
-      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.45fr)]">
+      <div className="grid min-w-0 gap-3 xl:grid-cols-[minmax(0,1fr)_300px]">
         {/* Node vector clock panels */}
-        <div className="grid gap-3 md:grid-cols-3">
+        <div className="grid min-w-0 gap-3 md:grid-cols-3">
           {step.nodes.map(node => {
             const colors = NODE_COLORS[node.id]
             // Is this node involved in the current event?
@@ -276,7 +273,7 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
             return (
               <div
                 key={node.id}
-                className={`rounded border p-3 transition-all ${
+                className={`min-w-0 rounded border p-3 transition-all ${
                   isActiveNode
                     ? 'border-emerald-500 bg-emerald-500/10'
                     : `border-slate-800 bg-slate-950/40`
@@ -291,7 +288,7 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
                   </span>
                 </div>
 
-                <div className={`font-mono text-base ${isActiveNode ? 'text-emerald-300' : 'text-slate-200'}`}>
+                <div className={`break-words font-mono text-base ${isActiveNode ? 'text-emerald-300' : 'text-slate-200'}`}>
                   {clockStr}
                 </div>
 
@@ -318,7 +315,7 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
           })}
         </div>
 
-        <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+        <div className="min-w-0 rounded border border-slate-800 bg-slate-950/40 p-4">
           <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">causality check</p>
           <p className="font-mono text-sm text-slate-300">
             {currentEvent
@@ -335,7 +332,7 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
       </div>
 
       {/* Causality legend */}
-      <div className="rounded border border-slate-800 bg-slate-950/40 px-4 py-2.5 flex flex-wrap gap-4 text-[10px] text-slate-500">
+      <div className="flex max-w-full flex-wrap gap-4 rounded border border-slate-800 bg-slate-950/40 px-4 py-2.5 text-[10px] text-slate-500">
         <span className="flex items-center gap-1.5">
           <span className="inline-block h-2 w-4 rounded-sm bg-emerald-400/60" />
           active event
@@ -344,12 +341,12 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
           <span className="inline-block h-2 w-4 border border-emerald-400 rounded-sm opacity-60" />
           send / receive
         </span>
-        <span className="flex items-center gap-1.5 text-slate-600">
+        <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-slate-600">
           <span className="font-mono text-[10px]">VC(e₁) ≤ VC(e₂)</span>
           →
           <span className="text-slate-500">e₁ happened-before e₂</span>
         </span>
-        <span className="flex items-center gap-1.5 text-slate-600">
+        <span className="flex min-w-0 flex-wrap items-center gap-1.5 text-slate-600">
           <span className="font-mono text-[10px]">neither ≤ other</span>
           →
           <span className="text-slate-500">concurrent (∥)</span>
@@ -372,7 +369,7 @@ export function VectorClock() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-auto p-4">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
         <VectorClockView step={player.currentStep} />
       </div>
       <Controls
