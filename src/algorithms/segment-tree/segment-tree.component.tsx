@@ -95,11 +95,13 @@ function SegmentTreeView({ step }: { step: SegmentTreeStep }) {
   // SVG dimensions
   const SVG_W = 100
   const SVG_H = 100
+  const queryNodes = step.queryRange ? step.activeNodes.length : 0
+  const activeRanges = nodes.filter((node) => step.activeNodes.includes(node.index)).map((node) => `[${node.label}]`)
 
   return (
-    <div className="w-full max-w-4xl space-y-4 mx-auto">
+    <div className="w-full space-y-4">
       {/* Phase badge */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <span
           className={`inline-block rounded px-2 py-0.5 text-[10px] uppercase tracking-widest font-mono ${
             step.phase === 'build'
@@ -129,85 +131,116 @@ function SegmentTreeView({ step }: { step: SegmentTreeStep }) {
         )}
       </div>
 
-      {/* Binary tree SVG */}
-      <svg
-        viewBox={`0 0 ${SVG_W} ${SVG_H}`}
-        className="w-full max-w-2xl mx-auto border border-slate-800"
-        style={{ background: '#020617' }}
-      >
-        {/* Edges */}
-        {nodes.map((nd) => {
-          const left = nodeMap[nd.index * 2]
-          const right = nodeMap[nd.index * 2 + 1]
-          return (
-            <g key={`edges-${nd.index}`}>
-              {left && (
-                <line
-                  x1={nd.x}
-                  y1={nd.y}
-                  x2={left.x}
-                  y2={left.y}
-                  stroke={isActive(nd.index) && isActive(left.index) ? '#34d399' : '#1e293b'}
-                  strokeWidth={0.5}
-                />
-              )}
-              {right && (
-                <line
-                  x1={nd.x}
-                  y1={nd.y}
-                  x2={right.x}
-                  y2={right.y}
-                  stroke={isActive(nd.index) && isActive(right.index) ? '#34d399' : '#1e293b'}
-                  strokeWidth={0.5}
-                />
-              )}
-            </g>
-          )
-        })}
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.7fr)]">
+        {/* Binary tree SVG */}
+        <svg
+          viewBox={`0 0 ${SVG_W} ${SVG_H}`}
+          className="w-full min-h-[420px] border border-slate-800"
+          style={{ background: '#020617' }}
+        >
+          {/* Edges */}
+          {nodes.map((nd) => {
+            const left = nodeMap[nd.index * 2]
+            const right = nodeMap[nd.index * 2 + 1]
+            return (
+              <g key={`edges-${nd.index}`}>
+                {left && (
+                  <line
+                    x1={nd.x}
+                    y1={nd.y}
+                    x2={left.x}
+                    y2={left.y}
+                    stroke={isActive(nd.index) && isActive(left.index) ? '#34d399' : '#1e293b'}
+                    strokeWidth={0.5}
+                  />
+                )}
+                {right && (
+                  <line
+                    x1={nd.x}
+                    y1={nd.y}
+                    x2={right.x}
+                    y2={right.y}
+                    stroke={isActive(nd.index) && isActive(right.index) ? '#34d399' : '#1e293b'}
+                    strokeWidth={0.5}
+                  />
+                )}
+              </g>
+            )
+          })}
 
-        {/* Nodes */}
-        {nodes.map((nd) => {
-          const { fill, stroke, text } = nodeColor(nd)
-          const r = nd.level === 0 ? 6.5 : 5
-          return (
-            <g key={`node-${nd.index}`}>
-              <circle cx={nd.x} cy={nd.y} r={r} fill={fill} stroke={stroke} strokeWidth={0.7} />
-              {/* Value */}
-              <text
-                x={nd.x}
-                y={nd.y + 1.5}
-                textAnchor="middle"
-                fontSize={nd.level === 0 ? 3.8 : 3.2}
-                fontFamily="monospace"
-                fill={text}
-              >
-                {step.tree[nd.index] !== 0 || step.phase !== 'build' ? nd.value : ''}
-              </text>
-              {/* Range label below */}
-              <text
-                x={nd.x}
-                y={nd.y + r + 3.5}
-                textAnchor="middle"
-                fontSize={2}
-                fontFamily="monospace"
-                fill="#475569"
-              >
-                [{nd.label}]
+          {/* Nodes */}
+          {nodes.map((nd) => {
+            const { fill, stroke, text } = nodeColor(nd)
+            const r = nd.level === 0 ? 6.5 : 5
+            return (
+              <g key={`node-${nd.index}`}>
+                <circle cx={nd.x} cy={nd.y} r={r} fill={fill} stroke={stroke} strokeWidth={0.7} />
+                {/* Value */}
+                <text
+                  x={nd.x}
+                  y={nd.y + 1.5}
+                  textAnchor="middle"
+                  fontSize={nd.level === 0 ? 3.8 : 3.2}
+                  fontFamily="monospace"
+                  fill={text}
+                >
+                  {step.tree[nd.index] !== 0 || step.phase !== 'build' ? nd.value : ''}
+                </text>
+                {/* Range label below */}
+                <text
+                  x={nd.x}
+                  y={nd.y + r + 3.5}
+                  textAnchor="middle"
+                  fontSize={2}
+                  fontFamily="monospace"
+                  fill="#475569"
+                >
+                  [{nd.label}]
+                </text>
+              </g>
+            )
+          })}
+
+          {/* Query range indicator on x-axis */}
+          {step.queryRange && (
+            <g>
+              {/* Highlight markers above array */}
+              <text x={50} y={96} textAnchor="middle" fontSize={2.2} fontFamily="monospace" fill="#34d399">
+                query [{step.queryRange[0]}..{step.queryRange[1]}]
               </text>
             </g>
-          )
-        })}
+          )}
+        </svg>
 
-        {/* Query range indicator on x-axis */}
-        {step.queryRange && (
-          <g>
-            {/* Highlight markers above array */}
-            <text x={50} y={96} textAnchor="middle" fontSize={2.2} fontFamily="monospace" fill="#34d399">
-              query [{step.queryRange[0]}..{step.queryRange[1]}]
-            </text>
-          </g>
-        )}
-      </svg>
+        <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-1">
+          <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">interview question</p>
+            <p className="font-mono text-sm text-slate-300">
+              {step.phase === 'query'
+                ? 'Which visited nodes are fully inside the query range, and which get pruned?'
+                : step.phase === 'update'
+                  ? 'After the leaf changes, which ancestors must be recomputed?'
+                  : 'Why can each internal node answer a whole range in O(1)?'}
+            </p>
+          </div>
+          <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">active ranges</p>
+            <p className="font-mono text-sm text-emerald-300">
+              {activeRanges.length > 0 ? activeRanges.join(' ') : 'none'}
+            </p>
+          </div>
+          <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">cost signal</p>
+            <p className="font-mono text-sm text-slate-300">
+              {step.phase === 'query' && step.queryRange
+                ? `${queryNodes} active node${queryNodes === 1 ? '' : 's'} instead of scanning ${step.queryRange[1] - step.queryRange[0] + 1} array slots`
+                : step.phase === 'update'
+                  ? 'Only the root-to-leaf path changes'
+                  : 'Build once, answer many range queries'}
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* Original array */}
       <div className="border border-slate-800 bg-slate-950/40 p-3">

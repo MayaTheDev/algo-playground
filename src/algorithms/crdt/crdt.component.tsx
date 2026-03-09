@@ -191,7 +191,7 @@ function CrdtView({ step }: { step: CrdtStep }) {
   }, 0)
 
   return (
-    <div className="w-full max-w-4xl space-y-4">
+    <div className="w-full space-y-4">
       {/* Title row */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -209,7 +209,7 @@ function CrdtView({ step }: { step: CrdtStep }) {
       )}
 
       {/* Replica panels + optional sync arrow */}
-      <div className="flex gap-3 items-stretch flex-wrap md:flex-nowrap">
+      <div className="flex gap-3 items-stretch flex-wrap xl:flex-nowrap">
         {step.replicas.map((replica, i) => {
           const isActive = step.activeReplica === replica.id
           const replicaInConflict =
@@ -243,19 +243,34 @@ function CrdtView({ step }: { step: CrdtStep }) {
         })}
       </div>
 
-      {/* Phase description card */}
-      <div
-        className={`rounded border px-4 py-3 text-xs font-mono leading-relaxed transition-colors duration-300 ${
-          isResolved
-            ? 'border-emerald-800/50 bg-emerald-900/10 text-emerald-300'
-            : isConflict
-              ? 'border-amber-800/50 bg-amber-900/10 text-amber-300'
-              : step.phase === 'sync'
-                ? 'border-sky-800/50 bg-sky-900/10 text-sky-300'
-                : 'border-slate-800 bg-slate-900/40 text-slate-400'
-        }`}
-      >
-        {step.description}
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.45fr)]">
+        {/* Phase description card */}
+        <div
+          className={`rounded border px-4 py-3 text-xs font-mono leading-relaxed transition-colors duration-300 ${
+            isResolved
+              ? 'border-emerald-800/50 bg-emerald-900/10 text-emerald-300'
+              : isConflict
+                ? 'border-amber-800/50 bg-amber-900/10 text-amber-300'
+                : step.phase === 'sync'
+                  ? 'border-sky-800/50 bg-sky-900/10 text-sky-300'
+                  : 'border-slate-800 bg-slate-900/40 text-slate-400'
+          }`}
+        >
+          {step.description}
+        </div>
+
+        <div className="rounded border border-slate-800 bg-slate-950/40 px-4 py-3">
+          <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">operator question</p>
+          <p className="font-mono text-sm text-slate-300">
+            {isConflict
+              ? 'Do these replicas need conflict resolution or can the merge function converge automatically?'
+              : isResolved
+                ? 'Which CRDT law makes repeated sync safe?'
+                : step.phase === 'counter'
+                  ? 'Why can every replica increment locally without coordination?'
+                  : 'What state is safe to merge if messages arrive out of order?'}
+          </p>
+        </div>
       </div>
 
       {/* CRDT laws footer */}
@@ -284,7 +299,7 @@ export function Crdt() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="flex-1 overflow-auto p-4 flex justify-center">
+      <div className="flex-1 overflow-auto p-4">
         <CrdtView step={player.currentStep} />
       </div>
       <Controls

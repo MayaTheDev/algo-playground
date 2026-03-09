@@ -50,6 +50,12 @@ function BinaryDisplay({ binaryRepr }: { binaryRepr: string | null }) {
 function FenwickView({ step }: { step: FenwickStep }) {
   const { original, tree, phase, activeIndex, visitedIndices, queryResult } = step
   const n = original.length
+  const nextIndex =
+    activeIndex === null
+      ? null
+      : phase === 'query'
+        ? activeIndex - lsb(activeIndex)
+        : activeIndex + lsb(activeIndex)
 
   // Determine cell color for BIT array (1-indexed, index 0 unused)
   function treeColor(i: number): string {
@@ -75,7 +81,7 @@ function FenwickView({ step }: { step: FenwickStep }) {
   }
 
   return (
-    <div className="w-full max-w-3xl space-y-6">
+    <div className="w-full space-y-6">
       {/* Phase badge */}
       <div className="flex items-center gap-3">
         <span
@@ -97,99 +103,126 @@ function FenwickView({ step }: { step: FenwickStep }) {
         )}
       </div>
 
-      {/* BIT array — 1-indexed, skip index 0 */}
-      <div>
-        <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-2">
-          BIT array (1-indexed)
-        </p>
+      <div className="grid gap-4 xl:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.65fr)]">
+        <div className="space-y-6 overflow-x-auto rounded border border-slate-800 bg-slate-950/30 p-4">
+          {/* BIT array — 1-indexed, skip index 0 */}
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-2">
+              BIT array (1-indexed)
+            </p>
 
-        {/* Range brackets above cells */}
-        <div className="flex gap-1 mb-1 ml-0">
-          {Array.from({ length: n }, (_, i) => {
-            const idx = i + 1
-            const span = lsb(idx) // how many elements this cell covers
-            return (
-              <div
-                key={idx}
-                className="flex flex-col items-center"
-                style={{ width: '2.75rem' }}
-              >
-                <span className="text-[9px] font-mono text-slate-600">
-                  [{idx - span + 1}–{idx}]
-                </span>
+            {/* Range brackets above cells */}
+            <div className="flex gap-2 mb-1 ml-0 min-w-max">
+              {Array.from({ length: n }, (_, i) => {
+                const idx = i + 1
+                const span = lsb(idx) // how many elements this cell covers
+                return (
+                  <div
+                    key={idx}
+                    className="flex flex-col items-center"
+                    style={{ width: '4.25rem' }}
+                  >
+                    <span className="text-[9px] font-mono text-slate-600">
+                      [{idx - span + 1}-{idx}]
+                    </span>
+                    <div
+                      className={`h-px w-full mt-0.5 ${
+                        visitedIndices.includes(idx) || activeIndex === idx
+                          ? phase === 'update'
+                            ? 'bg-amber-500/50'
+                            : 'bg-emerald-500/50'
+                          : 'bg-slate-800'
+                      }`}
+                    />
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* BIT cells */}
+            <div className="flex gap-2 min-w-max">
+              {Array.from({ length: n }, (_, i) => {
+                const idx = i + 1
+                return (
+                  <div
+                    key={idx}
+                    className={`flex h-14 flex-col items-center justify-center rounded border transition-all duration-150 ${treeColor(idx)}`}
+                    style={{ width: '4.25rem', minWidth: '4.25rem' }}
+                  >
+                    <span className="text-[9px] text-slate-600 font-mono">[{idx}]</span>
+                    <span className="text-sm font-mono font-semibold">{tree[idx]}</span>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Connector lines */}
+          <div className="flex gap-2 min-w-max">
+            {Array.from({ length: n }, (_, i) => {
+              const idx = i + 1
+              const isActive = activeIndex === idx || visitedIndices.includes(idx)
+              return (
                 <div
-                  className={`h-px w-full mt-0.5 ${
-                    visitedIndices.includes(idx) || activeIndex === idx
-                      ? phase === 'update'
-                        ? 'bg-amber-500/50'
-                        : 'bg-emerald-500/50'
-                      : 'bg-slate-800'
-                  }`}
-                />
-              </div>
-            )
-          })}
+                  key={idx}
+                  className="flex justify-center"
+                  style={{ width: '4.25rem', minWidth: '4.25rem' }}
+                >
+                  <div
+                    className={`w-px h-4 transition-colors duration-150 ${
+                      isActive
+                        ? phase === 'update'
+                          ? 'bg-amber-500/60'
+                          : 'bg-emerald-500/60'
+                        : 'bg-slate-800'
+                    }`}
+                  />
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Original array */}
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-2">
+              original array (0-indexed)
+            </p>
+            <div className="flex gap-2 min-w-max">
+              {original.map((val, i) => (
+                <div
+                  key={i}
+                  className={`flex h-14 flex-col items-center justify-center rounded border transition-all duration-150 ${origColor(i)}`}
+                  style={{ width: '4.25rem', minWidth: '4.25rem' }}
+                >
+                  <span className="text-[9px] text-slate-600 font-mono">[{i}]</span>
+                  <span className="text-sm font-mono font-semibold">{val}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* BIT cells */}
-        <div className="flex gap-1">
-          {Array.from({ length: n }, (_, i) => {
-            const idx = i + 1
-            return (
-              <div
-                key={idx}
-                className={`flex flex-col items-center justify-center border rounded h-11 transition-all duration-150 ${treeColor(idx)}`}
-                style={{ width: '2.75rem', minWidth: '2.75rem' }}
-              >
-                <span className="text-[9px] text-slate-600 font-mono">[{idx}]</span>
-                <span className="text-sm font-mono font-semibold">{tree[idx]}</span>
-              </div>
-            )
-          })}
-        </div>
-      </div>
-
-      {/* Connector lines */}
-      <div className="flex gap-1">
-        {Array.from({ length: n }, (_, i) => {
-          const idx = i + 1
-          const isActive = activeIndex === idx || visitedIndices.includes(idx)
-          return (
-            <div
-              key={idx}
-              className="flex justify-center"
-              style={{ width: '2.75rem', minWidth: '2.75rem' }}
-            >
-              <div
-                className={`w-px h-4 transition-colors duration-150 ${
-                  isActive
-                    ? phase === 'update'
-                      ? 'bg-amber-500/60'
-                      : 'bg-emerald-500/60'
-                    : 'bg-slate-800'
-                }`}
-              />
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Original array */}
-      <div>
-        <p className="text-[10px] uppercase tracking-widest text-slate-600 mb-2">
-          original array (0-indexed)
-        </p>
-        <div className="flex gap-1">
-          {original.map((val, i) => (
-            <div
-              key={i}
-              className={`flex flex-col items-center justify-center border rounded h-11 transition-all duration-150 ${origColor(i)}`}
-              style={{ width: '2.75rem', minWidth: '2.75rem' }}
-            >
-              <span className="text-[9px] text-slate-600 font-mono">[{i}]</span>
-              <span className="text-sm font-mono font-semibold">{val}</span>
-            </div>
-          ))}
+        <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-1">
+          <div className="rounded border border-slate-800 bg-slate-950/60 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">next move</p>
+            <p className="font-mono text-sm text-slate-300">
+              {activeIndex === null
+                ? 'No active pointer'
+                : `${phase === 'query' ? 'subtract' : 'add'} lsb(${activeIndex}) = ${lsb(activeIndex)} -> ${nextIndex}`}
+            </p>
+          </div>
+          <div className="rounded border border-slate-800 bg-slate-950/60 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">visited cells</p>
+            <p className="font-mono text-sm text-emerald-300">
+              {visitedIndices.length > 0 ? visitedIndices.join(' -> ') : 'none'}
+            </p>
+          </div>
+          <div className="rounded border border-slate-800 bg-slate-950/60 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">mental model</p>
+            <p className="text-xs leading-relaxed text-slate-400">
+              Query walks backward through covered ranges. Update walks forward to every range that contains the changed index.
+            </p>
+          </div>
         </div>
       </div>
 

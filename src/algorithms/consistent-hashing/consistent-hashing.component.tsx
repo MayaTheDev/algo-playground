@@ -260,8 +260,11 @@ const PHASE_COLORS: Record<ConsistentHashStep['phase'], string> = {
 // ── Main component ────────────────────────────────────────────────────────────
 
 function ConsistentHashingView({ step }: { step: ConsistentHashStep }) {
+  const movedRatio =
+    step.dataItems.length === 0 ? 0 : Math.round((step.movedItems.length / step.dataItems.length) * 100)
+
   return (
-    <div className="w-full max-w-4xl space-y-4">
+    <div className="w-full space-y-4">
       {/* Phase badge */}
       <div className="flex items-center gap-2">
         <span
@@ -276,16 +279,41 @@ function ConsistentHashingView({ step }: { step: ConsistentHashStep }) {
         )}
       </div>
 
-      <div className="flex flex-col md:flex-row gap-4 items-start">
+      <div className="grid gap-4 xl:grid-cols-[minmax(340px,0.8fr)_minmax(0,1fr)_minmax(280px,0.55fr)]">
         {/* Ring */}
-        <div className="shrink-0 flex justify-center">
+        <div className="flex justify-center rounded border border-slate-800 bg-slate-950/30 p-4">
           <HashRing step={step} />
         </div>
 
-        {/* Right panel */}
-        <div className="flex-1 min-w-0 space-y-3">
+        <div className="min-w-0 space-y-3">
           <AssignmentTable step={step} />
           <ServerList step={step} />
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-1">
+          <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">challenge</p>
+            <p className="font-mono text-sm text-slate-300">
+              {step.phase === 'add-server'
+                ? 'Which keys fall in the new server arc?'
+                : step.phase === 'remove-server'
+                  ? 'Which keys belonged to the failed server?'
+                  : 'Walk clockwise from each key to its owner.'}
+            </p>
+          </div>
+          <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">remap score</p>
+            <p className="font-mono text-lg text-amber-300">
+              {step.movedItems.length}/{step.dataItems.length || 0}
+              <span className="ml-2 text-xs text-slate-500">({movedRatio}%)</span>
+            </p>
+          </div>
+          <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">why it matters</p>
+            <p className="text-xs leading-relaxed text-slate-400">
+              The win is not perfect balance. The win is that membership changes move only a small slice of keys.
+            </p>
+          </div>
         </div>
       </div>
     </div>

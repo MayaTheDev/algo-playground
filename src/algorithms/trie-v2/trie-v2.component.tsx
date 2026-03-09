@@ -215,11 +215,11 @@ function SuggestionsPanel({ step }: SuggestionsPanelProps) {
   const { suggestions, prefix, words } = step
 
   return (
-    <div className="flex flex-col gap-3 min-w-[130px] max-w-[160px]">
+    <div className="grid gap-3 md:grid-cols-2 xl:flex xl:min-w-[220px] xl:max-w-[260px] xl:flex-col">
       {/* Words in trie */}
       <div>
         <p className="text-[9px] text-slate-600 uppercase tracking-widest mb-1.5">in trie ({words.length})</p>
-        <div className="space-y-0.5">
+        <div className="grid gap-1 sm:grid-cols-2 xl:grid-cols-1">
           {words.length === 0 && (
             <p className="text-[10px] text-slate-700 font-mono">—</p>
           )}
@@ -239,7 +239,7 @@ function SuggestionsPanel({ step }: SuggestionsPanelProps) {
         {suggestions.length === 0 ? (
           <p className="text-[10px] text-slate-700 font-mono italic">—</p>
         ) : (
-          <div className="space-y-0.5">
+          <div className="grid gap-1 sm:grid-cols-2 xl:grid-cols-1">
             {suggestions.map(w => (
               <div key={w} className="font-mono text-[10px] px-1.5 py-0.5 border border-emerald-900/60 bg-emerald-950/30">
                 <span className="text-emerald-400">{w.slice(0, prefix.length)}</span>
@@ -263,7 +263,7 @@ export function TrieV2() {
   return (
     <div className="flex flex-col h-full bg-slate-950">
       {/* Main area */}
-      <div className="flex-1 flex gap-3 p-3 overflow-hidden min-h-0">
+      <div className="flex-1 flex flex-col gap-3 p-3 overflow-hidden min-h-0 xl:flex-row">
         {/* Tree visualization */}
         <div className="flex-1 flex flex-col min-w-0 min-h-0">
           {/* Phase badge */}

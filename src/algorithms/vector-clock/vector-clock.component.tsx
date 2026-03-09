@@ -79,6 +79,8 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
     : startX + 40
 
   const svgHeight = NODE_IDS.length * TIMELINE_HEIGHT + 16
+  const currentEvent = step.events[step.currentEvent]
+  const activeClock = currentEvent ? step.nodes.find((node) => node.id === currentEvent.node)?.clock : null
 
   return (
     <div className="w-full space-y-4">
@@ -262,58 +264,74 @@ function VectorClockView({ step }: { step: VectorClockStep }) {
         </svg>
       </div>
 
-      {/* Node vector clock panels */}
-      <div className="grid grid-cols-3 gap-3">
-        {step.nodes.map(node => {
-          const colors = NODE_COLORS[node.id]
-          // Is this node involved in the current event?
-          const currentEv = step.events[step.currentEvent]
-          const isActiveNode = currentEv?.node === node.id
-          const clockStr = `[${node.clock.join(', ')}]`
+      <div className="grid gap-3 xl:grid-cols-[minmax(0,1fr)_minmax(320px,0.45fr)]">
+        {/* Node vector clock panels */}
+        <div className="grid gap-3 md:grid-cols-3">
+          {step.nodes.map(node => {
+            const colors = NODE_COLORS[node.id]
+            // Is this node involved in the current event?
+            const isActiveNode = currentEvent?.node === node.id
+            const clockStr = `[${node.clock.join(', ')}]`
 
-          return (
-            <div
-              key={node.id}
-              className={`rounded border p-3 transition-all ${
-                isActiveNode
-                  ? 'border-emerald-500 bg-emerald-500/10'
-                  : `border-slate-800 bg-slate-950/40`
-              }`}
-            >
-              <div className="mb-2 flex items-center gap-2">
-                <span
-                  className={`inline-block h-2.5 w-2.5 rounded-full ${colors.dot}`}
-                />
-                <span className={`text-xs font-semibold ${isActiveNode ? 'text-emerald-300' : colors.text}`}>
-                  Node {node.id}
-                </span>
-              </div>
+            return (
+              <div
+                key={node.id}
+                className={`rounded border p-3 transition-all ${
+                  isActiveNode
+                    ? 'border-emerald-500 bg-emerald-500/10'
+                    : `border-slate-800 bg-slate-950/40`
+                }`}
+              >
+                <div className="mb-2 flex items-center gap-2">
+                  <span
+                    className={`inline-block h-2.5 w-2.5 rounded-full ${colors.dot}`}
+                  />
+                  <span className={`text-xs font-semibold ${isActiveNode ? 'text-emerald-300' : colors.text}`}>
+                    Node {node.id}
+                  </span>
+                </div>
 
-              <div className={`font-mono text-base ${isActiveNode ? 'text-emerald-300' : 'text-slate-200'}`}>
-                {clockStr}
-              </div>
+                <div className={`font-mono text-base ${isActiveNode ? 'text-emerald-300' : 'text-slate-200'}`}>
+                  {clockStr}
+                </div>
 
-              <div className="mt-2 flex gap-1">
-                {node.clock.map((count, k) => (
-                  <div key={k} className="flex-1 text-center">
-                    <div className="text-[8px] text-slate-600 uppercase">
-                      {NODE_IDS[k]}
+                <div className="mt-2 flex gap-1">
+                  {node.clock.map((count, k) => (
+                    <div key={k} className="flex-1 text-center">
+                      <div className="text-[8px] text-slate-600 uppercase">
+                        {NODE_IDS[k]}
+                      </div>
+                      <div
+                        className={`rounded text-xs font-mono py-0.5 ${
+                          isActiveNode && k === ['A', 'B', 'C'].indexOf(node.id)
+                            ? 'bg-emerald-500/20 text-emerald-300'
+                            : 'bg-slate-900 text-slate-400'
+                        }`}
+                      >
+                        {count}
+                      </div>
                     </div>
-                    <div
-                      className={`rounded text-xs font-mono py-0.5 ${
-                        isActiveNode && k === ['A', 'B', 'C'].indexOf(node.id)
-                          ? 'bg-emerald-500/20 text-emerald-300'
-                          : 'bg-slate-900 text-slate-400'
-                      }`}
-                    >
-                      {count}
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
+
+        <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
+          <p className="mb-2 text-[10px] uppercase tracking-widest text-slate-600">causality check</p>
+          <p className="font-mono text-sm text-slate-300">
+            {currentEvent
+              ? `${currentEvent.label}: ${currentEvent.type === 'receive' ? 'merge sender clock, then increment local slot' : currentEvent.type === 'send' ? 'increment local slot, then attach the vector' : 'increment only the local slot'}`
+              : 'Compare two event vectors: if neither dominates, the events are concurrent.'}
+          </p>
+          <div className="mt-3 border-t border-slate-800 pt-3">
+            <p className="text-[10px] uppercase tracking-widest text-slate-600">active vector</p>
+            <p className="mt-1 font-mono text-lg text-emerald-300">
+              {activeClock ? `[${activeClock.join(', ')}]` : 'none'}
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Causality legend */}
