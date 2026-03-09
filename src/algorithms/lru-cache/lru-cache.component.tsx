@@ -110,7 +110,7 @@ function HashMapPanel({ step }: { step: LruStep }) {
   return (
     <div className="rounded border border-slate-800 bg-slate-950/40 p-4">
       <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-slate-600">hash map</p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid gap-3 sm:grid-cols-2 2xl:grid-cols-3">
         {Object.entries(step.values).map(([key, value]) => (
           <div
             key={key}
@@ -242,7 +242,7 @@ function LruCacheView({
   onPredict: (choice: string) => void
 }) {
   return (
-    <div className="w-full max-w-5xl space-y-4">
+    <div className="w-full space-y-4">
       <StatsPanel step={step} />
 
       <InterviewCard step={step} prediction={prediction} onPredict={onPredict} />
