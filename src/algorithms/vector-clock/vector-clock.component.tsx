@@ -36,7 +36,7 @@ const NODE_IDS = ['A', 'B', 'C']
 // Layout constants
 const TIMELINE_HEIGHT = 90     // px per node row
 const DOT_RADIUS = 10          // px
-const LEFT_LABEL = 52          // px for node label column
+const LEFT_LABEL = 76          // px for node label column
 const RIGHT_CLOCK = 140        // px for clock column on right
 const ARROW_HEAD = 7           // arrowhead size
 
