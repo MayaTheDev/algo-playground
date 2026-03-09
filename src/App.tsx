@@ -67,8 +67,8 @@ const Day20Game = createStoryGame('day-20-game')
 const Day29Game = createStoryGame('day-29-game')
 const Day38Game = createStoryGame('day-38-game')
 const Day50Game = createStoryGame('day-50-game')
-const Day54Game = createStoryGame('day-54-game')
 const Day55Game = createStoryGame('day-55-game')
+const Day60Game = createStoryGame('day-60-game')
 
 const ALGOS: AlgoMeta[] = [
   // Story mini-games for days without algorithm modules
@@ -249,11 +249,11 @@ const ALGOS: AlgoMeta[] = [
     day: 50,
   },
   {
-    id: 'day-54-game',
-    label: 'Handoff Queue',
-    tag: '#Concurrency',
-    complexity: 'game',
-    description: 'Put the distributed handoff back in order before the next system-design round starts.',
+    id: 'lru-cache-day54',
+    label: 'LRU Cache',
+    tag: '#LRU',
+    complexity: 'O(1)',
+    description: 'The twenty-second visualizer: watch recency reorder, capacity fill, and the stale key drop.',
     day: 54,
     availableFrom: '2026-08-06',
   },
@@ -265,6 +265,15 @@ const ALGOS: AlgoMeta[] = [
     description: 'Keep the graph visualizer useful on slow Wi-Fi for someone preparing for a screen.',
     day: 55,
     availableFrom: '2026-08-11',
+  },
+  {
+    id: 'day-60-game',
+    label: 'Roofline Review',
+    tag: '#Milestone',
+    complexity: 'game',
+    description: 'Review the system-design pieces Maya has been assembling across two months.',
+    day: 60,
+    availableFrom: '2026-08-27',
   },
   // Day 8 — searching
   {
@@ -587,7 +596,7 @@ const ALGOS: AlgoMeta[] = [
     day: 56,
     availableFrom: '2026-08-13',
   },
-  // Day 57 — Topological Sort v2 (The Order That Came Back Short)
+  // Day 57 — Topological Sort v2 (Last Text)
   {
     id: 'topological-sort-v2',
     label: 'Topological Sort v2',
@@ -652,8 +661,8 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'day-29-game': Day29Game,
   'day-38-game': Day38Game,
   'day-50-game': Day50Game,
-  'day-54-game': Day54Game,
   'day-55-game': Day55Game,
+  'day-60-game': Day60Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -679,6 +688,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'hash-table': HashTable,
   'token-bucket': TokenBucket,
   'lru-cache': LruCache,
+  'lru-cache-day54': LruCache,
   'consistent-hashing': ConsistentHashing,
   'segment-tree': SegmentTree,
   'interval-scheduling': IntervalScheduling,
@@ -759,12 +769,13 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   51: 'xor-fold',
   52: 'crdt',
   53: 'vector-clock-v2',
-  54: 'day-54-game',
+  54: 'lru-cache-day54',
   55: 'day-55-game',
   56: 'bellman-ford',
   57: 'topological-sort-v2',
   58: 'a-star-precise',
   59: 'cache-invalidation',
+  60: 'day-60-game',
   61: 'n-queens',
 }
 

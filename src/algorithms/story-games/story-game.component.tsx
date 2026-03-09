@@ -735,13 +735,13 @@ export const STORY_GAME_CONFIGS = {
     { target: 71, label: 'whiteboard handwriting', note: 'The loop gets quieter.' },
     { target: 50, label: 'Leo', note: 'Named once. Not explained.' },
   ]),
-  'day-54-game': sequence('day-54-game', 54, 'Handoff Queue', 'Put the distributed handoff back in order before the next system-design round starts.', [
-    { labels: ['observe stale write', 'name the race', 'pause the shortcut', 'add the guard'] },
-    { labels: ['take the lock', 'write once', 'release cleanly', 'check the log'] },
-  ]),
   'day-55-game': reflex('day-55-game', 55, 'Fast Enough', 'Chukwuemeka is loading the graph visualizer on slow university Wi-Fi. Keep the pieces that help him pass the screen. Cut the weight that only performs.', [
     { good: ['BFS queue', 'DFS stack', 'edge labels', 'step button'], bad: ['autoplay video', '5MB hero', 'hidden labels', 'blur effect'], target: 4 },
     { good: ['static deploy', 'small bundle', 'keyboard controls', 'clear example'], bad: ['private localhost', 'blocking font', 'mystery animation', 'analytics wall'], target: 4 },
+  ]),
+  'day-60-game': sequence('day-60-game', 60, 'Roofline Review', 'Two months in, Maya turns scattered system-design work into a body of knowledge. Put the review notes in the order an engineer can use.', [
+    { labels: ['event queues', 'cache invalidation', 'API boundaries', 'failure modes', 'monitoring'] },
+    { labels: ['save work', 'step back', 'see the system', 'return tomorrow'] },
   ]),
 } satisfies Record<string, StoryGameConfig>
 
