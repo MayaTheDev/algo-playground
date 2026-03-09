@@ -686,6 +686,11 @@ function getDayView(value: string | null): View | null {
   return mappedView && isAvailableView(mappedView) ? mappedView : null
 }
 
+function getPathDay(pathname: string): string | null {
+  const match = pathname.match(/(?:^|\/)day(\d+)$/)
+  return match?.[1] ?? null
+}
+
 function getInitialView(): View {
   if (typeof window === 'undefined') return FALLBACK_ALGO
 
@@ -699,6 +704,11 @@ function getInitialView(): View {
   const dayView = getDayView(params.get('day'))
   if (dayView) {
     return dayView
+  }
+
+  const pathDayView = getDayView(getPathDay(window.location.pathname))
+  if (pathDayView) {
+    return pathDayView
   }
 
   return FALLBACK_ALGO
