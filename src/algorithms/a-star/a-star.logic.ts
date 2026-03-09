@@ -27,6 +27,7 @@ function makeGrid(): AStarCell[][] {
             ? 'end'
             : 'empty',
       g: Infinity,
+      h: heuristic(r, c),
       f: Infinity,
     } satisfies AStarCell)),
   )
@@ -42,15 +43,16 @@ function heuristic(r: number, c: number): number {
 
 export function* aStarSteps(): Generator<AStarStep> {
   const grid = makeGrid()
-  grid[START[0]][START[1]].g = 0
-  grid[START[0]][START[1]].f = heuristic(START[0], START[1])
+  const startCell = grid[START[0]][START[1]]
+  startCell.g = 0
+  startCell.f = startCell.h
 
   const openSet = new Set<string>([`${START[0]},${START[1]}`])
   const cameFrom = new Map<string, string>()
 
   yield {
     grid: cloneGrid(grid),
-    description: `Initialize. Start=(0,0), End=(7,11). g[start]=0, f=h=${heuristic(START[0], START[1])}.`,
+    description: `Initialize. Start=(0,0), End=(7,11). g[start]=0, f=h=${startCell.h}.`,
   }
 
   const DIRS: [number, number][] = [[-1, 0], [1, 0], [0, -1], [0, 1]]
@@ -109,13 +111,13 @@ export function* aStarSteps(): Generator<AStarStep> {
       if (tentativeG < neighbor.g) {
         cameFrom.set(`${nr},${nc}`, bestKey)
         neighbor.g = tentativeG
-        neighbor.f = tentativeG + heuristic(nr, nc)
+        neighbor.f = tentativeG + neighbor.h
         if (neighbor.state !== 'end') neighbor.state = 'open'
         openSet.add(`${nr},${nc}`)
 
         yield {
           grid: cloneGrid(grid),
-          description: `Open (${nr},${nc}): g=${tentativeG}, h=${heuristic(nr, nc)}, f=${neighbor.f}.`,
+          description: `Open (${nr},${nc}): g=${tentativeG}, h=${neighbor.h}, f=${neighbor.f}.`,
         }
       }
     }

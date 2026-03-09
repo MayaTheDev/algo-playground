@@ -735,6 +735,10 @@ export const STORY_GAME_CONFIGS = {
     { target: 71, label: 'whiteboard handwriting', note: 'The loop gets quieter.' },
     { target: 50, label: 'Leo', note: 'Named once. Not explained.' },
   ]),
+  'day-54-game': sequence('day-54-game', 54, 'Handoff Queue', 'Put the distributed handoff back in order before the next system-design round starts.', [
+    { labels: ['observe stale write', 'name the race', 'pause the shortcut', 'add the guard'] },
+    { labels: ['take the lock', 'write once', 'release cleanly', 'check the log'] },
+  ]),
 } satisfies Record<string, StoryGameConfig>
 
 export type StoryGameId = keyof typeof STORY_GAME_CONFIGS

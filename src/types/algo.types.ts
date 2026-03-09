@@ -110,6 +110,7 @@ export type AlgoId =
   | 'day-29-game'
   | 'day-38-game'
   | 'day-50-game'
+  | 'day-54-game'
   | 'binary-search'
   | 'depth-first-search'
   | 'maze'
@@ -139,6 +140,12 @@ export type AlgoId =
   | 'vector-clock'
   | 'fenwick-tree'
   | 'crdt'
+  | 'bellman-ford'
+  | 'cache-invalidation'
+  | 'n-queens'
+  | 'a-star-precise'
+  | 'vector-clock-v2'
+  | 'topological-sort-v2'
   | SortAlgoId
 
 export type AlgoMeta = {
@@ -157,6 +164,7 @@ export type AStarCell = {
   col: number
   state: 'empty' | 'wall' | 'start' | 'end' | 'open' | 'closed' | 'path'
   g: number
+  h: number
   f: number
 }
 export type AStarStep = { grid: AStarCell[][]; description: string }

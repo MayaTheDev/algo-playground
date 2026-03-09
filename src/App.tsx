@@ -34,6 +34,12 @@ import { XorFold } from './algorithms/xor-fold/xor-fold.component'
 import { VectorClock } from './algorithms/vector-clock/vector-clock.component'
 import { FenwickTree } from './algorithms/fenwick-tree/fenwick-tree.component'
 import { Crdt } from './algorithms/crdt/crdt.component'
+import { BellmanFord } from './algorithms/bellman-ford/bellman-ford.component'
+import { CacheInvalidation } from './algorithms/cache-invalidation/cache-invalidation.component'
+import { NQueens } from './algorithms/n-queens/n-queens.component'
+import { VectorClockV2 } from './algorithms/vector-clock-v2/vector-clock-v2.component'
+import { TopologicalSortV2 } from './algorithms/topological-sort-v2/topological-sort-v2.component'
+import { AStarPrecise } from './algorithms/a-star-precise/a-star-precise.component'
 import { createStoryGame } from './algorithms/story-games/story-game.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
@@ -61,6 +67,7 @@ const Day20Game = createStoryGame('day-20-game')
 const Day29Game = createStoryGame('day-29-game')
 const Day38Game = createStoryGame('day-38-game')
 const Day50Game = createStoryGame('day-50-game')
+const Day54Game = createStoryGame('day-54-game')
 
 const ALGOS: AlgoMeta[] = [
   // Story mini-games for days without algorithm modules
@@ -239,6 +246,15 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'game',
     description: 'Tune memory fragments until the signal resolves.',
     day: 50,
+  },
+  {
+    id: 'day-54-game',
+    label: 'Handoff Queue',
+    tag: '#Concurrency',
+    complexity: 'game',
+    description: 'Put the distributed handoff back in order before the next system-design round starts.',
+    day: 54,
+    availableFrom: '2026-08-06',
   },
   // Day 8 — searching
   {
@@ -541,6 +557,66 @@ const ALGOS: AlgoMeta[] = [
     day: 52,
     availableFrom: '2026-07-30',
   },
+  // Day 53 — Vector Clock v2 (The Lock That Was Missing)
+  {
+    id: 'vector-clock-v2',
+    label: 'Vector Clock v2',
+    tag: '#DistributedSystems',
+    complexity: 'O(n) per event',
+    description: 'The clock was never wrong. Two replicas take a write during one partition — trigger the lost update, then put a lock around it.',
+    day: 53,
+    availableFrom: '2026-08-04',
+  },
+  // Day 56 — Bellman-Ford (Eli at the Edge)
+  {
+    id: 'bellman-ford',
+    label: 'Bellman-Ford',
+    tag: '#BellmanFord',
+    complexity: 'O(V × E)',
+    description: 'Shortest paths with negative edge weights. Relax every edge, V-1 times, then check for negative cycles.',
+    day: 56,
+    availableFrom: '2026-08-13',
+  },
+  // Day 57 — Topological Sort v2 (The Order That Came Back Short)
+  {
+    id: 'topological-sort-v2',
+    label: 'Topological Sort v2',
+    tag: '#TopoSort',
+    complexity: 'O(V+E)',
+    description: 'Kahn\'s with the in-degree bookkeeping made explicit — and the quiet failure: add a cycle and the queue empties early with no error at all.',
+    day: 57,
+    availableFrom: '2026-08-18',
+  },
+  // Day 58 — A* (Precise Costs), contributed by xlifeofcode (The Open Source Moment)
+  {
+    id: 'a-star-precise',
+    label: 'A* (Precise Costs)',
+    tag: '#Community',
+    complexity: 'O((V+E) log V)',
+    description: 'Same A* search, contributed rewrite: g (spent) and h (guessed) kept apart on every cell — then watch a wrong h quietly return the wrong path.',
+    day: 58,
+    availableFrom: '2026-08-20',
+  },
+  // Day 59 — Cache Invalidation (Thank You)
+  {
+    id: 'cache-invalidation',
+    label: 'Cache Invalidation',
+    tag: '#Redis',
+    complexity: 'O(1) per event',
+    description: 'Write-through vs write-back, the window where cache and database disagree, and pub/sub invalidation closing it.',
+    day: 59,
+    availableFrom: '2026-08-25',
+  },
+  // Day 61 — N-Queens (The Question I Almost Ask)
+  {
+    id: 'n-queens',
+    label: 'N-Queens',
+    tag: '#Backtracking',
+    complexity: 'O(n!)',
+    description: 'Place, evaluate, fail, back out, try the next thing. The pruning is what makes it finish.',
+    day: 61,
+    availableFrom: '2026-09-01',
+  },
 ]
 
 const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
@@ -566,6 +642,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'day-29-game': Day29Game,
   'day-38-game': Day38Game,
   'day-50-game': Day50Game,
+  'day-54-game': Day54Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -599,6 +676,12 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'vector-clock': VectorClock,
   'fenwick-tree': FenwickTree,
   'crdt': Crdt,
+  'bellman-ford': BellmanFord,
+  'cache-invalidation': CacheInvalidation,
+  'n-queens': NQueens,
+  'a-star-precise': AStarPrecise,
+  'vector-clock-v2': VectorClockV2,
+  'topological-sort-v2': TopologicalSortV2,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -662,6 +745,13 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   49: 'consistent-hashing',
   51: 'xor-fold',
   52: 'crdt',
+  53: 'vector-clock-v2',
+  54: 'day-54-game',
+  56: 'bellman-ford',
+  57: 'topological-sort-v2',
+  58: 'a-star-precise',
+  59: 'cache-invalidation',
+  61: 'n-queens',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {
@@ -676,14 +766,19 @@ function isAvailableView(view: View): boolean {
   return view === 'compare' || visibleAlgos.some((algo) => algo.id === view)
 }
 
-function getDayView(value: string | null): View | null {
+type InitialSelection = {
+  view: View
+  lockedDay: number | null
+}
+
+function getDayMapping(value: string | null): { day: number; view: View } | null {
   if (value === null) return null
 
   const day = Number.parseInt(value, 10)
   if (Number.isNaN(day)) return null
 
   const mappedView = DAY_VIEWS[day]
-  return mappedView && isAvailableView(mappedView) ? mappedView : null
+  return mappedView ? { day, view: mappedView } : null
 }
 
 function getPathDay(pathname: string): string | null {
@@ -691,27 +786,31 @@ function getPathDay(pathname: string): string | null {
   return match?.[1] ?? null
 }
 
-function getInitialView(): View {
-  if (typeof window === 'undefined') return FALLBACK_ALGO
+function getInitialSelection(): InitialSelection {
+  if (typeof window === 'undefined') return { view: FALLBACK_ALGO, lockedDay: null }
 
   const params = new URLSearchParams(window.location.search)
   const requestedView = params.get('algo') ?? params.get('view')
 
   if (isView(requestedView) && isAvailableView(requestedView)) {
-    return requestedView
+    return { view: requestedView, lockedDay: null }
   }
 
-  const dayView = getDayView(params.get('day'))
-  if (dayView) {
-    return dayView
+  const dayMapping = getDayMapping(params.get('day'))
+  if (dayMapping) {
+    return isAvailableView(dayMapping.view)
+      ? { view: dayMapping.view, lockedDay: null }
+      : { view: FALLBACK_ALGO, lockedDay: dayMapping.day }
   }
 
-  const pathDayView = getDayView(getPathDay(window.location.pathname))
-  if (pathDayView) {
-    return pathDayView
+  const pathDayMapping = getDayMapping(getPathDay(window.location.pathname))
+  if (pathDayMapping) {
+    return isAvailableView(pathDayMapping.view)
+      ? { view: pathDayMapping.view, lockedDay: null }
+      : { view: FALLBACK_ALGO, lockedDay: pathDayMapping.day }
   }
 
-  return FALLBACK_ALGO
+  return { view: FALLBACK_ALGO, lockedDay: null }
 }
 
 const VIEW_OPTIONS = [
@@ -719,15 +818,44 @@ const VIEW_OPTIONS = [
   { value: 'compare' as View, label: 'Compare' },
 ]
 
-export function App() {
-  const [view, setView] = useState<View>(getInitialView)
+function LockedDay({ day, meta }: { day: number; meta: AlgoMeta | undefined }) {
+  return (
+    <div className="flex h-full items-center justify-center p-4">
+      <div className="w-full max-w-xl border border-slate-800 bg-slate-950/70 p-6 font-mono">
+        <p className="text-[10px] uppercase tracking-widest text-slate-600">day {day}</p>
+        <h2 className="mt-2 text-lg text-slate-100">{meta?.label ?? 'Coming Soon'}</h2>
+        <p className="mt-3 text-xs leading-relaxed text-slate-500">
+          This playground entry is wired, but it belongs to Maya's story timeline and has not
+          opened yet. Use preview mode to inspect future days locally.
+        </p>
+        {meta?.availableFrom && (
+          <p className="mt-4 text-[10px] uppercase tracking-widest text-emerald-500">
+            opens {meta.availableFrom}
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
 
-  const meta = visibleAlgos.find(a => a.id === view)
+export function App() {
+  const initialSelection = getInitialSelection()
+  const [view, setView] = useState<View>(initialSelection.view)
+  const [lockedDay, setLockedDay] = useState<number | null>(initialSelection.lockedDay)
+
+  const lockedMeta = lockedDay === null
+    ? undefined
+    : ALGOS.find((algo) => algo.day === lockedDay && DAY_VIEWS[lockedDay] === algo.id)
+  const meta = lockedDay === null ? visibleAlgos.find(a => a.id === view) : lockedMeta
   const ActiveComponent = view !== 'compare' ? ALGO_COMPONENTS[view as AlgoId] : null
+  const selectView = (nextView: View) => {
+    setLockedDay(null)
+    setView(nextView)
+  }
 
   return (
     <div className="flex h-screen bg-[#020617] text-slate-200 overflow-hidden">
-      <AlgoSelector selected={view} onSelect={setView} algos={visibleAlgos} websiteUrl={WEBSITE_URL} />
+      <AlgoSelector selected={view} onSelect={selectView} algos={visibleAlgos} websiteUrl={WEBSITE_URL} />
 
       <div className="flex-1 flex flex-col min-w-0 relative scanline-effect overflow-hidden">
         {/* Header */}
@@ -741,7 +869,7 @@ export function App() {
           {/* Mobile algo picker */}
           <select
             value={view}
-            onChange={e => setView(e.target.value as View)}
+            onChange={e => selectView(e.target.value as View)}
             className="md:hidden bg-[#020617] text-xs font-mono text-slate-300 border border-slate-700 px-2 py-1 focus:outline-none focus:border-emerald-600 flex-1 max-w-[160px]"
           >
             {VIEW_OPTIONS.map(opt => (
@@ -781,7 +909,9 @@ export function App() {
 
         {/* Visualizer */}
         <div className="flex-1 min-h-0">
-          {view === 'compare'
+          {lockedDay !== null
+            ? <LockedDay day={lockedDay} meta={lockedMeta} />
+            : view === 'compare'
             ? <CompareView key="compare" />
             : ActiveComponent && <ActiveComponent key={view} />
           }
