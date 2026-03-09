@@ -259,10 +259,10 @@ const ALGOS: AlgoMeta[] = [
   },
   {
     id: 'day-55-game',
-    label: 'Second Round Prep',
-    tag: '#Interview',
+    label: 'Fast Enough',
+    tag: '#Usability',
     complexity: 'game',
-    description: 'Pick the tradeoff Maya can defend when the follow-up questions start.',
+    description: 'Keep the graph visualizer useful on slow Wi-Fi for someone preparing for a screen.',
     day: 55,
     availableFrom: '2026-08-11',
   },
