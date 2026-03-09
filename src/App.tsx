@@ -714,7 +714,7 @@ const visibleAlgos = (PREVIEW_ALL
   .slice()
   .sort((a, b) => b.day - a.day || a.label.localeCompare(b.label))
 
-const FALLBACK_ALGO: AlgoId = 'depth-first-search'
+const STATIC_FALLBACK_ALGO: AlgoId = 'depth-first-search'
 const DAY_VIEWS: Partial<Record<number, View>> = {
   1: 'day-1-game',
   2: 'day-2-game',
@@ -811,8 +811,13 @@ function getPathDay(pathname: string): string | null {
   return match?.[1] ?? null
 }
 
+function getFallbackView(): View {
+  return visibleAlgos[0]?.id ?? STATIC_FALLBACK_ALGO
+}
+
 function getInitialSelection(): InitialSelection {
-  if (typeof window === 'undefined') return { view: FALLBACK_ALGO, lockedDay: null }
+  const fallbackView = getFallbackView()
+  if (typeof window === 'undefined') return { view: fallbackView, lockedDay: null }
 
   const params = new URLSearchParams(window.location.search)
   const requestedView = params.get('algo') ?? params.get('view')
@@ -825,17 +830,17 @@ function getInitialSelection(): InitialSelection {
   if (dayMapping) {
     return isAvailableView(dayMapping.view)
       ? { view: dayMapping.view, lockedDay: null }
-      : { view: FALLBACK_ALGO, lockedDay: dayMapping.day }
+      : { view: fallbackView, lockedDay: dayMapping.day }
   }
 
   const pathDayMapping = getDayMapping(getPathDay(window.location.pathname))
   if (pathDayMapping) {
     return isAvailableView(pathDayMapping.view)
       ? { view: pathDayMapping.view, lockedDay: null }
-      : { view: FALLBACK_ALGO, lockedDay: pathDayMapping.day }
+      : { view: fallbackView, lockedDay: pathDayMapping.day }
   }
 
-  return { view: FALLBACK_ALGO, lockedDay: null }
+  return { view: fallbackView, lockedDay: null }
 }
 
 const VIEW_OPTIONS = [
