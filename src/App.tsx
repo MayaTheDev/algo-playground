@@ -702,7 +702,7 @@ const visibleAlgos = (PREVIEW_ALL
   ? ALGOS
   : ALGOS.filter(a => !a.availableFrom || new Date(a.availableFrom) <= now))
   .slice()
-  .sort((a, b) => a.day - b.day || a.label.localeCompare(b.label))
+  .sort((a, b) => b.day - a.day || a.label.localeCompare(b.label))
 
 const FALLBACK_ALGO: AlgoId = 'depth-first-search'
 const DAY_VIEWS: Partial<Record<number, View>> = {
