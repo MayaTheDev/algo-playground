@@ -79,6 +79,7 @@ const Day60Game = createStoryGame('day-60-game')
 const Day64Game = createStoryGame('day-64-game')
 const Day65Game = createStoryGame('day-65-game')
 const Day68Game = createStoryGame('day-68-game')
+const Day70Game = createStoryGame('day-70-game')
 
 const ALGOS: AlgoMeta[] = [
   // Story mini-games for days without algorithm modules
@@ -311,6 +312,15 @@ const ALGOS: AlgoMeta[] = [
     description: 'Practice making constraints, approach, and edge cases observable before coding.',
     day: 68,
     availableFrom: '2026-09-24T05:00:00Z',
+  },
+  {
+    id: 'day-70-game',
+    label: 'Fact Ledger',
+    tag: '#FinalRound',
+    complexity: 'game',
+    description: 'Answer the 3am spiral with evidence: facts first, fear second, conclusion last.',
+    day: 70,
+    availableFrom: '2026-10-01T05:00:00Z',
   },
   // Day 8 — searching
   {
@@ -773,6 +783,7 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'day-64-game': Day64Game,
   'day-65-game': Day65Game,
   'day-68-game': Day68Game,
+  'day-70-game': Day70Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -902,6 +913,7 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   67: 'linked-list-cycle',
   68: 'day-68-game',
   69: 'token-bucket-v2',
+  70: 'day-70-game',
   71: 'quickselect',
   77: 'edit-distance',
 }

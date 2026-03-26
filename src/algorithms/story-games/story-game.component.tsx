@@ -757,6 +757,10 @@ export const STORY_GAME_CONFIGS = {
     { labels: ['restate problem', 'name constraints', 'choose approach', 'write code', 'test edge case'] },
     { labels: ['start with mistake', 'name decision', 'show adjustment', 'state lesson'] },
   ]),
+  'day-70-game': sequence('day-70-game', 70, 'Fact Ledger', 'The 3am question shows up again. Answer it like an engineer: gather facts, test the claim, write the conclusion.', [
+    { labels: ['state question', 'list evidence', 'separate fear', 'draw conclusion'] },
+    { labels: ['passed two rounds', 'ship record', 'system tradeoffs', 'finish anyway'] },
+  ]),
 } satisfies Record<string, StoryGameConfig>
 
 export type StoryGameId = keyof typeof STORY_GAME_CONFIGS
