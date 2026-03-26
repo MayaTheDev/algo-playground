@@ -40,6 +40,13 @@ import { NQueens } from './algorithms/n-queens/n-queens.component'
 import { VectorClockV2 } from './algorithms/vector-clock-v2/vector-clock-v2.component'
 import { TopologicalSortV2 } from './algorithms/topological-sort-v2/topological-sort-v2.component'
 import { AStarPrecise } from './algorithms/a-star-precise/a-star-precise.component'
+import { TokenBucketV2 } from './algorithms/token-bucket-v2/token-bucket-v2.component'
+import { UnionFind } from './algorithms/union-find/union-find.component'
+import { LinkedListCycle } from './algorithms/linked-list-cycle/linked-list-cycle.component'
+import { BinarySearchAnswer } from './algorithms/binary-search-answer/binary-search-answer.component'
+import { MutexRace } from './algorithms/mutex-race/mutex-race.component'
+import { Quickselect } from './algorithms/quickselect/quickselect.component'
+import { EditDistance } from './algorithms/edit-distance/edit-distance.component'
 import { createStoryGame } from './algorithms/story-games/story-game.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
@@ -69,6 +76,9 @@ const Day38Game = createStoryGame('day-38-game')
 const Day50Game = createStoryGame('day-50-game')
 const Day55Game = createStoryGame('day-55-game')
 const Day60Game = createStoryGame('day-60-game')
+const Day64Game = createStoryGame('day-64-game')
+const Day65Game = createStoryGame('day-65-game')
+const Day68Game = createStoryGame('day-68-game')
 
 const ALGOS: AlgoMeta[] = [
   // Story mini-games for days without algorithm modules
@@ -273,7 +283,34 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'game',
     description: 'Review the system-design pieces Maya has been assembling across two months.',
     day: 60,
-    availableFrom: '2026-08-27',
+    availableFrom: '2026-08-27T05:00:00Z',
+  },
+  {
+    id: 'day-64-game',
+    label: 'Draft Two',
+    tag: '#Architecture',
+    complexity: 'game',
+    description: 'Rewrite the recruiter note as decoupled events: project, learning, gap, signal.',
+    day: 64,
+    availableFrom: '2026-09-10T05:00:00Z',
+  },
+  {
+    id: 'day-65-game',
+    label: 'Partition Choice',
+    tag: '#CAP',
+    complexity: 'game',
+    description: 'Choose consistency or availability explicitly when a network partition forces the tradeoff.',
+    day: 65,
+    availableFrom: '2026-09-15T05:00:00Z',
+  },
+  {
+    id: 'day-68-game',
+    label: 'Speak Before Type',
+    tag: '#InterviewPrep',
+    complexity: 'game',
+    description: 'Practice making constraints, approach, and edge cases observable before coding.',
+    day: 68,
+    availableFrom: '2026-09-24T05:00:00Z',
   },
   // Day 8 — searching
   {
@@ -634,7 +671,77 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(n!)',
     description: 'Place, evaluate, fail, back out, try the next thing. The pruning is what makes it finish.',
     day: 61,
-    availableFrom: '2026-09-01',
+    availableFrom: '2026-09-01T05:00:00Z',
+  },
+  // Day 69 — Token Bucket v2 (Human + AI, Revisited)
+  {
+    id: 'token-bucket-v2',
+    label: 'Token Bucket v2',
+    tag: '#SystemDesign',
+    complexity: 'O(1) per request',
+    description: 'Day 42 built the bucket. This one puts it behind shared state, races it against a sliding window, then takes the store away mid-burst and makes you choose which way it fails.',
+    day: 69,
+    availableFrom: '2026-09-29T05:00:00Z',
+  },
+  // Day 66 — Union-Find (Sunday)
+  {
+    id: 'union-find',
+    label: 'Union-Find',
+    tag: '#DisjointSets',
+    complexity: 'O(α(n)) amortized',
+    description: 'Are these two things in the same group? Watch a naive forest degenerate into a chain, then fix it with union by rank and path compression.',
+    day: 66,
+    availableFrom: '2026-09-17T05:00:00Z',
+  },
+  // Day 67 — Linked Lists / Floyd's (The Morning After)
+  {
+    id: 'linked-list-cycle',
+    label: "Floyd's Cycle Detection",
+    tag: '#LinkedLists',
+    complexity: 'O(n) time, O(1) space',
+    description: 'Does the list end or loop? Remember every node and pay for it in memory, or send a second pointer twice as fast and pay nothing.',
+    day: 67,
+    availableFrom: '2026-09-22T05:00:00Z',
+  },
+  // Day 63 — Binary Search on the Answer (Chloe Returns)
+  {
+    id: 'binary-search-answer',
+    label: 'Binary Search on the Answer',
+    tag: '#BinarySearch',
+    complexity: 'O(n log range)',
+    description: 'How big should a chunk be? The average lies because one row is huge. Stop calculating the answer and start guessing it — feasibility only runs one direction.',
+    day: 63,
+    availableFrom: '2026-09-08T05:00:00Z',
+  },
+  // Day 62 — Race Conditions / Mutexes (The Reddit Commenter)
+  {
+    id: 'mutex-race',
+    label: 'Race Conditions & Mutexes',
+    tag: '#Concurrency',
+    complexity: 'O(1) per critical section',
+    description: 'Two threads, one balance, no coordination — watch a deposit get accepted and silently overwritten. Then add a lock. Then take two locks in the wrong order.',
+    day: 62,
+    availableFrom: '2026-09-03T05:00:00Z',
+  },
+  // Day 71 — Quickselect (The Sprint)
+  {
+    id: 'quickselect',
+    label: 'Quickselect',
+    tag: '#Quickselect',
+    complexity: 'O(n) average',
+    description: 'Kth largest without sorting. A min-heap costs O(n log k) and keeps the input intact; quickselect destroys it and finishes in linear time — unless the pivots are adversarial.',
+    day: 71,
+    availableFrom: '2026-10-08',
+  },
+  // Day 77 — Edit Distance (Draft Three)
+  {
+    id: 'edit-distance',
+    label: 'Edit Distance',
+    tag: '#DynamicProgramming',
+    complexity: 'O(n × m)',
+    description: 'The minimum edits between two strings — and the part that matters: walk the table backward and the path you took is a diff.',
+    day: 77,
+    availableFrom: '2026-10-22',
   },
 ]
 
@@ -663,6 +770,9 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'day-50-game': Day50Game,
   'day-55-game': Day55Game,
   'day-60-game': Day60Game,
+  'day-64-game': Day64Game,
+  'day-65-game': Day65Game,
+  'day-68-game': Day68Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -703,6 +813,13 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'a-star-precise': AStarPrecise,
   'vector-clock-v2': VectorClockV2,
   'topological-sort-v2': TopologicalSortV2,
+  'token-bucket-v2': TokenBucketV2,
+  'union-find': UnionFind,
+  'linked-list-cycle': LinkedListCycle,
+  'binary-search-answer': BinarySearchAnswer,
+  'mutex-race': MutexRace,
+  'quickselect': Quickselect,
+  'edit-distance': EditDistance,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -777,6 +894,16 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   59: 'cache-invalidation',
   60: 'day-60-game',
   61: 'n-queens',
+  62: 'mutex-race',
+  63: 'binary-search-answer',
+  64: 'day-64-game',
+  65: 'day-65-game',
+  66: 'union-find',
+  67: 'linked-list-cycle',
+  68: 'day-68-game',
+  69: 'token-bucket-v2',
+  71: 'quickselect',
+  77: 'edit-distance',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

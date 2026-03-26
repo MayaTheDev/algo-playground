@@ -743,6 +743,20 @@ export const STORY_GAME_CONFIGS = {
     { labels: ['event queues', 'cache invalidation', 'API boundaries', 'failure modes', 'monitoring'] },
     { labels: ['save work', 'step back', 'see the system', 'return tomorrow'] },
   ]),
+  'day-64-game': choice('day-64-game', 64, 'Draft Two', 'Rewrite the recruiter note as an event stream: emit what is true, then let the right reader subscribe.', [
+    { prompt: 'The draft opens with credentials before the project.', options: ['list every technology', 'name the thing built'], correct: 1, note: 'The object carries more signal than the stack list.' },
+    { prompt: 'The paragraph is tightly coupled to impressing one recruiter.', options: ['perform certainty', 'emit the true current state'], correct: 1, note: 'Clear events travel better than audience-shaped noise.' },
+    { prompt: 'The system has multiple listeners.', options: ['hard-code one receiver', 'publish a clean interface'], correct: 1, note: 'Decoupling starts with not guessing who will care.' },
+  ]),
+  'day-65-game': choice('day-65-game', 65, 'Partition Choice', 'The CAP theorem is not a puzzle to beat. Choose how the system breaks when the network splits.', [
+    { prompt: 'A banking ledger is partitioned.', options: ['serve stale balances', 'pause writes until consistency returns'], correct: 1, note: 'For money, consistency is the guarantee worth keeping.' },
+    { prompt: 'A social feed loses one region.', options: ['show a slightly stale feed', 'take the whole feed offline'], correct: 0, note: 'For a feed, availability usually matters more than perfect freshness.' },
+    { prompt: 'The interviewer asks how to solve CAP.', options: ['claim all three guarantees', 'state the chosen failure mode'], correct: 1, note: 'The engineering answer is explicit tradeoff, not magic.' },
+  ]),
+  'day-68-game': sequence('day-68-game', 68, 'Speak Before Type', 'Four days before the final round, make the invisible work observable before the code appears.', [
+    { labels: ['restate problem', 'name constraints', 'choose approach', 'write code', 'test edge case'] },
+    { labels: ['start with mistake', 'name decision', 'show adjustment', 'state lesson'] },
+  ]),
 } satisfies Record<string, StoryGameConfig>
 
 export type StoryGameId = keyof typeof STORY_GAME_CONFIGS

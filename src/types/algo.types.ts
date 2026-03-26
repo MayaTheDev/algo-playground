@@ -112,6 +112,9 @@ export type AlgoId =
   | 'day-50-game'
   | 'day-55-game'
   | 'day-60-game'
+  | 'day-64-game'
+  | 'day-65-game'
+  | 'day-68-game'
   | 'binary-search'
   | 'depth-first-search'
   | 'maze'
@@ -148,6 +151,13 @@ export type AlgoId =
   | 'a-star-precise'
   | 'vector-clock-v2'
   | 'topological-sort-v2'
+  | 'token-bucket-v2'
+  | 'union-find'
+  | 'linked-list-cycle'
+  | 'binary-search-answer'
+  | 'mutex-race'
+  | 'quickselect'
+  | 'edit-distance'
   | SortAlgoId
 
 export type AlgoMeta = {
