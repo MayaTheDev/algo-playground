@@ -741,7 +741,7 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(n) average',
     description: 'Kth largest without sorting. A min-heap costs O(n log k) and keeps the input intact; quickselect destroys it and finishes in linear time — unless the pivots are adversarial.',
     day: 71,
-    availableFrom: '2026-10-08',
+    availableFrom: '2026-10-06T05:00:00Z',
   },
   // Day 77 — Edit Distance (Draft Three)
   {
