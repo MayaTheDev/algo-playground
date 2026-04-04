@@ -761,6 +761,20 @@ export const STORY_GAME_CONFIGS = {
     { labels: ['state question', 'list evidence', 'separate fear', 'draw conclusion'] },
     { labels: ['passed two rounds', 'ship record', 'system tradeoffs', 'finish anyway'] },
   ]),
+  'day-75-game': choice('day-75-game', 75, 'Ship / Hold', 'A source map is useful until it becomes the whole codebase. Decide what belongs in production and what stays behind.', [
+    { prompt: 'The package build includes a full source map.', options: ['publish it for easier debugging', 'exclude it from the npm package'], correct: 1, note: 'Debuggability matters, but public artifacts need a deliberate boundary.' },
+    { prompt: 'A tool defaults to hiding what it is.', options: ['copy the cover story', 'state the actual operating condition'], correct: 1, note: 'Maya keeps finding that truthful interfaces age better than defensive ones.' },
+    { prompt: 'The title sounds like proof.', options: ['optimize for the title', 'name the work she wants'], correct: 1, note: 'The goal was never the title. It was becoming someone who could earn it.' },
+  ]),
+  'day-76-game': sequence('day-76-game', 76, 'Pipeline Scheduler', 'Four companies, one offer, and a live product. Schedule the concurrent work without dropping shared state.', [
+    { labels: ['read signal', 'update draft', 'send version 3', 'schedule screens', 'protect focus'] },
+    { labels: ['Nelly offer', 'phone screen A', 'phone screen B', '1,200 users', 'next decision'] },
+  ]),
+  'day-78-game': choice('day-78-game', 78, 'Build Intent', 'Marcus asks the question underneath the role question. Choose answers that make the system legible.', [
+    { prompt: 'The hiring manager asks what Maya wants to build.', options: ['recite a role ladder', 'name the systems she wants to make legible'], correct: 1, note: 'The useful answer is about work, not position.' },
+    { prompt: 'A distributed-system follow-up appears.', options: ['hide behind the buzzword', 'walk the failure mode'], correct: 1, note: 'The signal is concrete tradeoff reasoning.' },
+    { prompt: 'The answer arrives unprepared.', options: ['let it compress', 'write it down immediately'], correct: 1, note: 'Capture the shape before it becomes a vague memory.' },
+  ]),
 } satisfies Record<string, StoryGameConfig>
 
 export type StoryGameId = keyof typeof STORY_GAME_CONFIGS

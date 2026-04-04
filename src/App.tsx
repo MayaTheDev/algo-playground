@@ -47,6 +47,8 @@ import { BinarySearchAnswer } from './algorithms/binary-search-answer/binary-sea
 import { MutexRace } from './algorithms/mutex-race/mutex-race.component'
 import { Quickselect } from './algorithms/quickselect/quickselect.component'
 import { EditDistance } from './algorithms/edit-distance/edit-distance.component'
+import { BloomFilter } from './algorithms/bloom-filter/bloom-filter.component'
+import { DependencyResolution } from './algorithms/dependency-resolution/dependency-resolution.component'
 import { createStoryGame } from './algorithms/story-games/story-game.component'
 import type { AlgoId, AlgoMeta } from './types/algo.types'
 
@@ -80,6 +82,9 @@ const Day64Game = createStoryGame('day-64-game')
 const Day65Game = createStoryGame('day-65-game')
 const Day68Game = createStoryGame('day-68-game')
 const Day70Game = createStoryGame('day-70-game')
+const Day75Game = createStoryGame('day-75-game')
+const Day76Game = createStoryGame('day-76-game')
+const Day78Game = createStoryGame('day-78-game')
 
 const ALGOS: AlgoMeta[] = [
   // Story mini-games for days without algorithm modules
@@ -321,6 +326,33 @@ const ALGOS: AlgoMeta[] = [
     description: 'Answer the 3am spiral with evidence: facts first, fear second, conclusion last.',
     day: 70,
     availableFrom: '2026-10-01T05:00:00Z',
+  },
+  {
+    id: 'day-75-game',
+    label: 'Ship / Hold',
+    tag: '#SourceMaps',
+    complexity: 'game',
+    description: 'Decide what belongs in a public build artifact and what stays behind the publish boundary.',
+    day: 75,
+    availableFrom: '2026-10-20T05:00:00Z',
+  },
+  {
+    id: 'day-76-game',
+    label: 'Pipeline Scheduler',
+    tag: '#Concurrency',
+    complexity: 'game',
+    description: 'Coordinate an offer, two screens, and a growing product without dropping shared state.',
+    day: 76,
+    availableFrom: '2026-10-22T05:00:00Z',
+  },
+  {
+    id: 'day-78-game',
+    label: 'Build Intent',
+    tag: '#Observability',
+    complexity: 'game',
+    description: 'Answer the question underneath the role question: what do you want to build?',
+    day: 78,
+    availableFrom: '2026-10-29T05:00:00Z',
   },
   // Day 8 — searching
   {
@@ -743,6 +775,26 @@ const ALGOS: AlgoMeta[] = [
     day: 71,
     availableFrom: '2026-10-06T05:00:00Z',
   },
+  // Day 73 — Bloom Filter (The Wait)
+  {
+    id: 'bloom-filter',
+    label: 'Bloom Filter',
+    tag: '#ProbabilisticDataStructures',
+    complexity: 'O(k) per operation',
+    description: 'Two kinds of answer: "no" is certain, "yes" is probable. Watch a word that was never inserted come back as present — then watch the false-positive rate collapse when you pay for more bits.',
+    day: 73,
+    availableFrom: '2026-10-13T05:00:00Z',
+  },
+  // Day 74 — Semver & the Lockfile (The Call)
+  {
+    id: 'dependency-resolution',
+    label: 'Semver & the Lockfile',
+    tag: '#SupplyChain',
+    complexity: 'O(versions) per spec',
+    description: 'npm installs the highest version your RANGE admits, not the one in package.json. Publish two poisoned releases into those windows and four of five specs pull them — including the one that says "patches only".',
+    day: 74,
+    availableFrom: '2026-10-15T05:00:00Z',
+  },
   // Day 77 — Edit Distance (Draft Three)
   {
     id: 'edit-distance',
@@ -751,7 +803,7 @@ const ALGOS: AlgoMeta[] = [
     complexity: 'O(n × m)',
     description: 'The minimum edits between two strings — and the part that matters: walk the table backward and the path you took is a diff.',
     day: 77,
-    availableFrom: '2026-10-22',
+    availableFrom: '2026-10-27T05:00:00Z',
   },
 ]
 
@@ -784,6 +836,9 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'day-65-game': Day65Game,
   'day-68-game': Day68Game,
   'day-70-game': Day70Game,
+  'day-75-game': Day75Game,
+  'day-76-game': Day76Game,
+  'day-78-game': Day78Game,
   'depth-first-search': DepthFirstSearch,
   'binary-search': BinarySearch,
   'bubble-sort': BubbleSort,
@@ -831,6 +886,8 @@ const ALGO_COMPONENTS: Record<AlgoId, React.ComponentType> = {
   'mutex-race': MutexRace,
   'quickselect': Quickselect,
   'edit-distance': EditDistance,
+  'bloom-filter': BloomFilter,
+  'dependency-resolution': DependencyResolution,
 }
 
 const PREVIEW_ALL = import.meta.env.VITE_PREVIEW === 'true'
@@ -915,7 +972,13 @@ const DAY_VIEWS: Partial<Record<number, View>> = {
   69: 'token-bucket-v2',
   70: 'day-70-game',
   71: 'quickselect',
+  72: 'lru-cache',
+  73: 'bloom-filter',
+  74: 'dependency-resolution',
+  75: 'day-75-game',
+  76: 'day-76-game',
   77: 'edit-distance',
+  78: 'day-78-game',
 }
 
 function isAlgoId(value: string | null): value is AlgoId {

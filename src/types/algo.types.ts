@@ -116,6 +116,9 @@ export type AlgoId =
   | 'day-65-game'
   | 'day-68-game'
   | 'day-70-game'
+  | 'day-75-game'
+  | 'day-76-game'
+  | 'day-78-game'
   | 'binary-search'
   | 'depth-first-search'
   | 'maze'
@@ -159,6 +162,8 @@ export type AlgoId =
   | 'mutex-race'
   | 'quickselect'
   | 'edit-distance'
+  | 'bloom-filter'
+  | 'dependency-resolution'
   | SortAlgoId
 
 export type AlgoMeta = {
